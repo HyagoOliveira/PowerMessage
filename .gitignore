@@ -1,0 +1,11 @@
+/.metadata
+/Servers*
+*.bak
+/**/*.bak
+RemoteSystemsTempFiles/
+*.war
+*.zip
+/**/.~lock.*
+/**/*.log
+.classpath
+bin
