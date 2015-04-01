@@ -1,6 +1,7 @@
 package com.acception.powermessage
 
 import com.acception.usuario.Pessoa
+import com.acception.usuario.Telefone
 import org.springframework.dao.DataIntegrityViolationException
 
 class PessoaController {
@@ -17,11 +18,17 @@ class PessoaController {
     }
 
     def create() {
-        [pessoaInstance: new Pessoa(params)]
+		def pessoa = new Pessoa(params)
+		pessoa.telefones = [new Telefone(ddd:'', numero:''),
+							new Telefone(ddd:'', numero:'')];
+		
+        [pessoaInstance: pessoa]
     }
 
     def save() {
         def pessoaInstance = new Pessoa(params)
+		
+		println params
 		
 		
         if (!pessoaInstance.save(flush:true)) {
