@@ -7,8 +7,6 @@
 //
 //= require jquery
 //= require js/jquery-ui-1.10.4.custom.min
-//= require_self
-//= require jquery.maskedinput-1.1.4.pack
 
 if (typeof jQuery !== 'undefined') {
 	(function($) {

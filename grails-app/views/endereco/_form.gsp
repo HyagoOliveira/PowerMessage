@@ -1,5 +1,6 @@
 <%@ page import="com.acception.usuario.Endereco" %>
 
+<asset:javascript src="jquery.maskedinput.js"/>
 <asset:javascript src="cep_mask.js"/>
 
 <div class="fieldcontain ${hasErrors(bean: associacaoInstance.endereco, field: 'cep', 'error')} ">
