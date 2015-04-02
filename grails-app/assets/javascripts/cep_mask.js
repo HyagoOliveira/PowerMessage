@@ -3,5 +3,5 @@
  */
 
 $(document).ready(function(){
-	$('.cep').mask('99999-999');
+	//$('.cep').mask('99999-999');
 });

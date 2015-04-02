@@ -2,12 +2,23 @@
 
 <asset:javascript src="cep_mask.js"/>
 
+
 <div class="fieldcontain ${hasErrors(bean: associacaoInstance.endereco, field: 'cep', 'error')} ">
 	<label for="cep">
 		<g:message code="endereco.cep.label" default="Cep" />		
 	</label>
 	<g:textField name="cep" class="cep" maxlength="9" value="${associacaoInstance.endereco?.cep}"/>
 </div>
+<script type="text/javascript">
+	$('#cep').blur(function() {
+		$.getJSON("//viacep.com.br/ws/" + $('#cep').val() + "/json/?callback?", function(data) {
+			$('#cidade\\.id').val(data.localidade);
+			$('#logradouro').val(data.logradouro);
+			$('#complemento').val(data.complemento);
+			$('#bairro').val(data.bairro);
+		});
+	});
+</script>
 
 
 <div class="fieldcontain ${hasErrors(bean: associacaoInstance.endereco, field: 'logradouro', 'error')} ">
@@ -39,6 +50,6 @@
 	<label for="cidade">
 		<g:message code="endereco.cidade.label" default="Cidade" />		
 	</label>
-	<g:select id="cidade" name="cidade.id" from="${com.acception.usuario.Cidade.list()}" optionKey="id" value="${associacaoInstance.endereco?.cidade?.id}" class="many-to-one" noSelection="['null': '']"/>
+	<g:textField name="cidade.id" value="${associacaoInstance.endereco?.cidade?.id}" class="many-to-one"/>
 </div>
 
