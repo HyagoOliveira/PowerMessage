@@ -1,15 +1,23 @@
 <%@ page import="com.acception.usuario.Telefone" %>
 
 <asset:javascript src="jquery.maskedinput.js"/>
-<asset:javascript src="telefone_mask.js"/>
+<asset:javascript src="telefone_edit.js"/>
+<asset:stylesheet href="button.css"/>
 	
-<g:each var="telefone" in="${pessoaInstance.telefones}">
-	<div class="fieldcontain ${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">	
-    	<label for="numero">Telefone</label>	
-		<g:textField name="ddd" 	class="ddd" 	size="2" value="${telefone?.ddd}"/>
-		<g:textField name="numero" 	class="phone"  	value="${telefone?.numero}"/>
-	</div>
-</g:each>
+<div id="telefonesTable">
+
+		<g:each var="telefone" in="${pessoaInstance.telefones}" status="i">
+
+					<div id="phone${i}" class="fieldcontain ${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">	
+					   	<label for="telefone">Telefone</label>	
+						<g:textField class="ddd"	value="${telefone?.ddd}"    name='ddd' size="2"/>
+						<g:textField class="phone"  value="${telefone?.numero}"	name='numero'/>
+						<input type="button" class="button" value="-" onclick="removePhone(this);"/>
+					</div>	
+		</g:each>
+</div>
+	<input type="button" class="button" value="+" onclick="addPhone()" />
+
 	
 
 
