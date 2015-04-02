@@ -11,6 +11,7 @@
 </div>
 <script type="text/javascript">
 	$('#cep').blur(function() {
+		console.log($('#cep').val());
 		$.getJSON("//viacep.com.br/ws/" + $('#cep').val() + "/json/?callback?", function(data) {
 			$('#cidade\\.id').val(data.localidade);
 			$('#logradouro').val(data.logradouro);
