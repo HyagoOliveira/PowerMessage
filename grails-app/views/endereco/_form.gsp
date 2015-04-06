@@ -17,6 +17,13 @@
 			$('#logradouro').val(data.logradouro);
 			$('#complemento').val(data.complemento);
 			$('#bairro').val(data.bairro);
+		
+			var uf = data.uf;
+			$("#estado option").filter(function() {
+				$.trim(uf);
+			    return $(this).text() == uf; 
+			}).prop('selected', true);
+			
 		});
 	});
 </script>

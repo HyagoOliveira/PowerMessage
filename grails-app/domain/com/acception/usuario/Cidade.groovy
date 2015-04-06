@@ -3,7 +3,6 @@ package com.acception.usuario
 class Cidade {
 	String nome
 	Estado estado
-	
     static constraints = {
 		nome(maxSize:60)
     }
