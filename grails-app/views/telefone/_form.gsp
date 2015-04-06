@@ -5,7 +5,7 @@
 <asset:stylesheet href="button.css"/>
 	
 <div id="telefonesTable" name="telefonesTable">
-	<g:each var="telefone" in="${pessoaInstance.telefones}" status="i">
+	<g:each var="telefone" in="${pessoaInstance?.telefones}" status="i">
 		<div id="phonediv" class="fieldcontain ${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">	
 		   	<label for="telefone">Telefone</label>	
 			<g:textField class="ddd"	value="${telefone?.ddd}"    name='ddd' size="2" required="" />
@@ -14,7 +14,7 @@
 		</div>	
 	</g:each>
 	
-	<g:if test="${pessoaInstance.telefones.size()==0}">
+	<g:if test="${pessoaInstance.telefones == null || pessoaInstance?.telefones?.size()==0}">
 		<div id="phonediv" class="fieldcontain ${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">
 			<label for="telefone">Telefone</label>	
 			<g:textField class="ddd"	name='ddd' size="2" required="" />

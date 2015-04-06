@@ -40,8 +40,21 @@
 							</g:each>						
 					</li>
 				</g:if>
+				
+				<g:if test="${pessoaInstance?.telefones}">
+					<li class="fieldcontain">
+						<span id="telefone-label" class="property-label">
+							Telefone
+						</span> 
+						<span class="property-value" aria-labelledby="numero-label">							
+							${fieldValue(bean: pessoaInstance, field: "telefones")}
+						</span>
+					</li>
+				</g:if>
+				
+				
 			
-				<g:render template="/telefone/show" collection="${pessoaInstance.telefones}" var="telefoneInstance" ></g:render>			
+<%--				<g:render template="/telefone/show" collection="${pessoaInstance.telefones}" var="telefoneInstance" ></g:render>			--%>
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

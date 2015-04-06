@@ -24,11 +24,15 @@ class PessoaController {
     def save() {
         def pessoaInstance = new Pessoa(params)
 		
-		for (int i = 0; i < params?.ddd?.size(); i++) {
-			pessoaInstance.addToTelefones(new Telefone(ddd:params.ddd[i], numero:params.numero[i]));
+		if(params?.ddd.getClass().isArray()){		
+			for(int i=0; i<params?.ddd.size();i++){
+				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i]));
+			}
 		}
+		else
+			pessoaInstance.addToTelefones(new Telefone(params));	
 		
-		println "Tel pessoaInstance: $pessoaInstance.telefones"
+		
 		
 		
         if (!pessoaInstance.save(flush:true)) {
@@ -73,9 +77,13 @@ class PessoaController {
 		
 		pessoaInstance.telefones.clear();
 		
-		for (int i = 0; i < params?.ddd?.size(); i++) {
-			pessoaInstance.addToTelefones(new Telefone(ddd:params.ddd[i], numero:params.numero[i]));
+		if(params?.ddd.getClass().isArray()){
+			for(int i=0; i<params?.ddd.size();i++){
+				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i]));
+			}
 		}
+		else
+			pessoaInstance.addToTelefones(new Telefone(params));
 
         if (version != null) {
             if (pessoaInstance.version > version) {

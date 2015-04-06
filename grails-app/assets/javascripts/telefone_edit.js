@@ -11,7 +11,7 @@ function addPhone(){
 	var row;
 	row = "<div id='phone' class='fieldcontain'>";
 	row += "<label for='telefone'>Telefone</label>";
-	row += "<input class='ddd' name='ddd' id='ddd' size='2' required=''/>";
+	row += "<input class='ddd' name='ddd' size='2' required=''/>";
 	row += "<input class='phone' name='numero' required=''/>";
 	row += "<input type='button' class='button' value=' - ' onclick='removePhone(this)'/>";
 	row += "</div>";
