@@ -11,13 +11,49 @@
 	<g:textField name="cep" class="cep" maxlength="9" value="${associacaoInstance.endereco?.cep}"/>
 </div>
 <script type="text/javascript">
+
+	String.prototype.removeAccents = function(){
+	 return this
+	         .replace(/[áàãâä]/gi,"a")
+	         .replace(/[éè¨ê]/gi,"e")
+	         .replace(/[íìïî]/gi,"i")
+	         .replace(/[óòöôõ]/gi,"o")
+	         .replace(/[úùüû]/gi, "u")
+	         .replace(/[ç]/gi, "c")
+	         .replace(/[ñ]/gi, "n")
+	         .replace(/[^a-zA-Z0-9]/g," ");
+	}
+	function stripos (f_haystack, f_needle, f_offset) {
+	  var haystack = (f_haystack + '').toLowerCase().removeAccents();
+	  var needle = (f_needle + '').toLowerCase().removeAccents();
+	  var index = 0;
+
+	  if ((index = haystack.indexOf(needle, f_offset)) !== -1) {
+	    return index;
+	  }
+	  return false;
+	}
+
 	$('#cep').blur(function() {
 		console.log($('#cep').val());
 		$.getJSON("//viacep.com.br/ws/" + $('#cep').val() + "/json/?callback?", function(data) {
-			$('#cidade\\.id').val(data.localidade);
+			
 			$('#logradouro').val(data.logradouro);
 			$('#complemento').val(data.complemento);
 			$('#bairro').val(data.bairro);
+		
+			var uf = data.uf;
+			$("#estado option").filter(function() {
+				$.trim(uf);
+			    return $(this).text() == uf; 
+			}).prop('selected', true);
+			
+			var cidade = data.localidade.removeAccents() +" - " +$( "#estado option:selected" ).text();
+			alert(data.localidade);		
+			$("#cidade option").filter(function() {		
+				
+			    return $(this).text() == cidade.toUpperCase();
+			}).prop('selected', true);
 		});
 	});
 </script>

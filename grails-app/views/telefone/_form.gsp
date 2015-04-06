@@ -2,7 +2,7 @@
 
 <asset:javascript src="jquery.maskedinput.js"/>
 <asset:javascript src="telefone_edit.js"/>
-<asset:stylesheet href="button.css"/>
+<asset:stylesheet href="button.css"/> 
 	
 <div id="telefonesTable" name="telefonesTable">
 	<g:each var="telefone" in="${pessoaInstance?.telefones}" status="i">
