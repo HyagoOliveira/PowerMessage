@@ -18,7 +18,7 @@ class BootStrap {
 	def showLog(){
 		def version=grailsApplication.metadata['app.version']
 		println "-----------------------------------------"
-		println "$grailsApplication.metadata['app.name'] versão: $version"
+		println "${grailsApplication.metadata['app.name']} versão: $version"
 		println "Grupo Acception Tecnologias (C) 2015"
 		println "-----------------------------------------"
 		println "System initialized..."

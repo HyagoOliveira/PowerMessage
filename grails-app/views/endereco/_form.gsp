@@ -1,5 +1,6 @@
 <%@ page import="com.acception.usuario.Endereco" %>
 
+<asset:javascript src="jquery.maskedinput.js"/>
 <asset:javascript src="cep_mask.js"/>
 
 
@@ -58,6 +59,6 @@
 	<label for="cidade">
 		<g:message code="endereco.cidade.label" default="Cidade" />		
 	</label>
-	<g:textField name="cidade.id" value="${associacaoInstance.endereco?.cidade?.id}" class="many-to-one"/>
+	<g:select id="cidade" name="cidade.id" from="${com.acception.usuario.Cidade.list()}" optionKey="id" value="${associacaoInstance.endereco?.cidade?.id}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 

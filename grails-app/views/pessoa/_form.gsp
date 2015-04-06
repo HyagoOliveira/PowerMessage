@@ -1,8 +1,5 @@
 <%@ page import="com.acception.usuario.Pessoa" %>
 
-
-
-
 <div class="fieldcontain ${hasErrors(bean: pessoaInstance, field: 'nome', 'error')} required">
 	<label for="nome">
 		<g:message code="pessoa.nome.label" default="Nome" />

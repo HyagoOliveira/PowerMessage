@@ -17,18 +17,18 @@ class PessoaController {
         [pessoaInstanceList: Pessoa.list(params), pessoaInstanceTotal: Pessoa.count()]
     }
 
-    def create() {
-		def pessoa = new Pessoa(params)
-		pessoa.telefones = [new Telefone(ddd:'', numero:''),
-							new Telefone(ddd:'', numero:'')];
-		
-        [pessoaInstance: pessoa]
+    def create() {		
+		[pessoaInstance: new Pessoa(params)]
     }
 
     def save() {
         def pessoaInstance = new Pessoa(params)
 		
-		println params
+		for (int i = 0; i < params?.ddd?.size(); i++) {
+			pessoaInstance.addToTelefones(new Telefone(ddd:params.ddd[i], numero:params.numero[i]));
+		}
+		
+		println "Tel pessoaInstance: $pessoaInstance.telefones"
 		
 		
         if (!pessoaInstance.save(flush:true)) {
@@ -64,11 +64,18 @@ class PessoaController {
 
     def update(Long id, Long version) {
         def pessoaInstance = Pessoa.get(id)
+		
         if (!pessoaInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
             redirect(action: "list")
             return
         }
+		
+		pessoaInstance.telefones.clear();
+		
+		for (int i = 0; i < params?.ddd?.size(); i++) {
+			pessoaInstance.addToTelefones(new Telefone(ddd:params.ddd[i], numero:params.numero[i]));
+		}
 
         if (version != null) {
             if (pessoaInstance.version > version) {
