@@ -1,5 +1,4 @@
-jQuery(function(){
-	addPhone();
+jQuery(function(){	
 	applyMask();
 });
 
@@ -12,8 +11,8 @@ function addPhone(){
 	var row;
 	row = "<div id='phone' class='fieldcontain'>";
 	row += "<label for='telefone'>Telefone</label>";
-	row += "<input class='ddd' name='ddd' id='ddd' size='2'/>";
-	row += "<input class='phone' name='numero'/>";
+	row += "<input class='ddd' name='ddd' id='ddd' size='2' required=''/>";
+	row += "<input class='phone' name='numero' required=''/>";
 	row += "<input type='button' class='button' value=' - ' onclick='removePhone(this)'/>";
 	row += "</div>";
 	$("#telefonesTable").append(row);
@@ -21,5 +20,7 @@ function addPhone(){
 }
 
 function removePhone(valor){
-	$(valor).parent().remove();
+	var size = $('#telefonesTable').children().length;
+	if(size > 1)
+		$(valor).parent().remove();
 }

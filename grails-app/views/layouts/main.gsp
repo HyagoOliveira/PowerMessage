@@ -19,7 +19,6 @@
 		
 		
 		<asset:javascript src="application.js"/>
-		<asset:javascript src="script.js"/>
 		
 		<asset:stylesheet href="menu.css"/>
 		<asset:stylesheet href="mobile.css"/>

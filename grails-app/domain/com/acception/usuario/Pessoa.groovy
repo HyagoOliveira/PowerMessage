@@ -13,6 +13,10 @@ class Pessoa {
 		telefones nullable:false, blank:false
     }
 	
+	static mapping = {
+		telefones cascade: "all-delete-orphan"
+	}
+	
 	
 	String toString() {
 		"${nome}"

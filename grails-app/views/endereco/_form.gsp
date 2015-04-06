@@ -3,12 +3,24 @@
 <asset:javascript src="jquery.maskedinput.js"/>
 <asset:javascript src="cep_mask.js"/>
 
+
 <div class="fieldcontain ${hasErrors(bean: associacaoInstance.endereco, field: 'cep', 'error')} ">
 	<label for="cep">
 		<g:message code="endereco.cep.label" default="Cep" />		
 	</label>
 	<g:textField name="cep" class="cep" maxlength="9" value="${associacaoInstance.endereco?.cep}"/>
 </div>
+<script type="text/javascript">
+	$('#cep').blur(function() {
+		console.log($('#cep').val());
+		$.getJSON("//viacep.com.br/ws/" + $('#cep').val() + "/json/?callback?", function(data) {
+			$('#cidade\\.id').val(data.localidade);
+			$('#logradouro').val(data.logradouro);
+			$('#complemento').val(data.complemento);
+			$('#bairro').val(data.bairro);
+		});
+	});
+</script>
 
 
 <div class="fieldcontain ${hasErrors(bean: associacaoInstance.endereco, field: 'logradouro', 'error')} ">

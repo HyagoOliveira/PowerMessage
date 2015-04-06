@@ -24,9 +24,7 @@ class PessoaController {
     def save() {
         def pessoaInstance = new Pessoa(params)
 		
-		println params
-		
-		for (int i = 0; i < params.ddd.size(); i++) {
+		for (int i = 0; i < params?.ddd?.size(); i++) {
 			pessoaInstance.addToTelefones(new Telefone(ddd:params.ddd[i], numero:params.numero[i]));
 		}
 		
@@ -73,14 +71,9 @@ class PessoaController {
             return
         }
 		
-		for (int i = 0; i < pessoaInstance.telefones.size(); i++){
-			pessoaInstance.removeFromTelefones(pessoaInstance.telefones[i])			
-		}		
-		pessoaInstance.telefones.clear()	
-		println params	
-		println "Telefones: $pessoaInstance.telefones"
+		pessoaInstance.telefones.clear();
 		
-		for (int i = 0; i < params.ddd.size(); i++) {
+		for (int i = 0; i < params?.ddd?.size(); i++) {
 			pessoaInstance.addToTelefones(new Telefone(ddd:params.ddd[i], numero:params.numero[i]));
 		}
 
