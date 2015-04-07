@@ -28,5 +28,8 @@ class BootStrap {
 		fixtureLoader.load("estados")
 		fixtureLoader.load("cidades_p")
 		fixtureLoader.load("security")
+		fixtureLoader.load("associacao_teste")
+		fixtureLoader.load("contatos_teste")
+		fixtureLoader.load("grupo_teste")
 	}
 }

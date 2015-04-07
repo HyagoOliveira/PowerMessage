@@ -6,7 +6,6 @@ class Mensagem {
 	String texto
 	Date dataEnvio
 	Integer tentativas
-	String flag
 	MsgStatus msgStatus	
 
 	static hasMany = [grupos: Grupo, pessoas: Pessoa]	

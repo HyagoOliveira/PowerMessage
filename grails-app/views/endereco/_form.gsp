@@ -48,8 +48,7 @@
 			    return $(this).text() == uf; 
 			}).prop('selected', true);
 			
-			var cidade = data.localidade.removeAccents() +" - " +$( "#estado option:selected" ).text();
-			alert(data.localidade);		
+			var cidade = data.localidade.removeAccents() +" - " +$( "#estado option:selected" ).text();	
 			$("#cidade option").filter(function() {		
 				
 			    return $(this).text() == cidade.toUpperCase();

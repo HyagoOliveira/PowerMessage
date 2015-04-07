@@ -4,6 +4,7 @@ import com.acception.powermessage.*
 
 class Pessoa {
 	String nome	
+	Boolean ativo = true;
 	
 	static belongsTo = [Associacao, Grupo]
 	static hasMany = [grupos: Grupo, mensagens: Mensagem, telefones:Telefone]
