@@ -22,4 +22,24 @@ class Pessoa {
 	String toString() {
 		"${nome}"
 	}
+	
+	static namedQueries = {
+		ativos {
+			eq ('ativo', true)
+		}
+	}
+	
+	void reativar(){
+		ativo = true;
+	}
+	
+	void desativar(){
+		ativo = false;
+	}
+	
+	static getIfAtivo(Integer id){
+		Pessoa p = Pessoa.get(id)
+		if(p?.ativo)
+			return p;
+	}
 }

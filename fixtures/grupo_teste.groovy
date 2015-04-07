@@ -5,6 +5,9 @@ import com.acception.usuario.Pessoa;
 fixture {
 	def grupo = Grupo.findByNome('Acception Developers')
 	
+	if(grupo)
+		return;
+	
 	println "Criando grupo Acception Developers";
 	
 	developers(Grupo, 

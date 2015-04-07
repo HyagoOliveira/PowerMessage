@@ -14,7 +14,7 @@ class PessoaController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [pessoaInstanceList: Pessoa.list(params), pessoaInstanceTotal: Pessoa.count()]
+        [pessoaInstanceList: Pessoa.ativos.list(params), pessoaInstanceTotal: Pessoa.count()]
     }
 
     def create() {		
@@ -115,7 +115,8 @@ class PessoaController {
         }
 
         try {
-            pessoaInstance.delete(flush: true)
+            //pessoaInstance.delete(flush: true)
+			pessoaInstance.desativar()
             flash.message = message(code: 'default.deleted.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
             redirect(action: "list")
         }
