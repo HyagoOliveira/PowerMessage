@@ -8,7 +8,7 @@
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 		<script type="text/javascript">
 
-		function selectAll(idTabela){
+		function selectAll(idTabela) {
 			$('#' + idTabela + ' input:checkbox').prop('checked', $('#' + idTabela + ' th input:checkbox').is(':checked'));
 		}
 		
@@ -31,7 +31,6 @@
 	<body>
 		<div id="create-mensagem" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
-			<hr/>.
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>

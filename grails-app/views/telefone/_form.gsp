@@ -9,11 +9,12 @@
 	<h4>
 	   	<label for="telefone"><i class="icon call"></i>Telefone(s)</label>
 	</h4>
+	
 	<g:each var="telefone" in="${pessoaInstance?.telefones}" status="i">
-		<div id="phonediv" style="margin: 2px" class="${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">	
-			<g:textField class="ddd ui input" style="max-width: 50px" size="2" value="${telefone?.ddd}" name='ddd' size="2" required="" />
-			<g:textField class="phone" style="max-width: 150px" value="${telefone?.numero}" name='numero' required=""/>
-			<button class="tiny red labeled ui button" style="margin: 2px" onclick="removePhone(this);">
+		<div id="phonediv" class="${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">	
+			<g:textField class="ddd ui input" style="max-width: 65px" value="${telefone?.ddd}" name="ddd" required="" placeholder="DDD"/>
+			<g:textField class="phone" style="max-width: 150px" value="${telefone?.numero}" name='numero' required="" placeholder="Telefone"/>
+			<button type="button" class="tiny red labeled ui button" style="margin: 2px" onclick="removePhone(this);">
 				<i class="icon trash"></i>
 			</button>
 		</div>
@@ -21,13 +22,15 @@
 	
 	<g:if test="${pessoaInstance.telefones == null || pessoaInstance?.telefones?.size()==0}">
 		<div id="phonediv" class="fieldcontain ${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">
-			<label for="telefone">Telefone</label>	
 			<div class="ui input">
-			<g:textField class="ddd"	name='ddd' size="2" required="" />
+				<g:textField class="ddd" name='ddd' size="3" required="" placeholder="DDD"/>
 			</div>
 			<div class="ui input">
-			<g:textField class="phone"  name='numero' required=""/>
+				<g:textField class="phone" name='numero' required="" placeholder="Telefone"/>
 			</div>
+			<button type="button" class="tiny red labeled ui button" style="margin: 2px" onclick="removePhone(this);">
+				<i class="icon trash"></i>
+			</button>
 		</div>
 	</g:if>
 </div>

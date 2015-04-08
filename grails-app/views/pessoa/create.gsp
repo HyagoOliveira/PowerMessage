@@ -8,11 +8,6 @@
 					
 	</head>
 	<body>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="list" action="list"><g:message code="Contato Listagem" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
 		<div id="create-pessoa" role="main">
 			<h1><g:message code="Criar Contato" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -26,12 +21,8 @@
 			</ul>
 			</g:hasErrors>
 			<g:form action="save">
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
+				<g:render template="form"/>
+				<g:submitButton name="create" class="tiny ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 			</g:form>
 		</div>
 	</body>
