@@ -9,15 +9,6 @@
 <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
-	<a href="#list-mensagem" class="skip" tabindex="-1"><g:message
-			code="default.link.skip.label" default="Skip to content&hellip;" /></a>
-	<div class="nav" role="navigation">
-		<ul>
-			<li><g:link class="create" action="create">
-					<g:message code="Nova Mensagem" args="[entityName]" />
-				</g:link></li>
-		</ul>
-	</div>
 	<div id="list-mensagem" class="content scaffold-list" role="main">
 		<h1>
 			<g:message code="default.list.label" args="[entityName]" />
@@ -28,7 +19,7 @@
 			</div>
 		</g:if>
 		<g:if test="${mensagemInstanceList?.size() > 0}">
-			<table>
+			<table class="ui table">
 				<thead>
 					<tr>
 
@@ -60,10 +51,10 @@
 									${fieldValue(bean: mensagemInstance, field: "msgStatus")}
 								</td>
 
-								<td><a
-									href="${createLink(uri: '/mensagem/create?texto=' + fieldValue(bean: mensagemInstance, field: "texto"))}">Encaminhar<img
-										style="float: left;" alt=""
-										src="${resource(dir: 'images', file: 'forward.png')}"></a></td>
+								<td><a href="${createLink(uri: '/mensagem/create?texto=' + fieldValue(bean: mensagemInstance, field: "texto"))}">
+										<i class="icon reply"></i>Encaminhar
+									</a>
+								</td>
 							</tr>
 						</g:if>
 					</g:each>

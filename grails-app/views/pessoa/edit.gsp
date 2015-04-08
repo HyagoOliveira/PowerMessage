@@ -7,15 +7,22 @@
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#edit-pessoa" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="list" action="list"><g:message code="Contato Listagem" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="Novo Contato" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
 		<div id="edit-pessoa" class="content scaffold-edit" role="main">
 			<h1><g:message code="Editar Contato" args="[entityName]" /></h1>
+			
+			<g:link action="list">
+				<div class="tiny ui button" >
+					<i class="icon list"></i>
+					<g:message code="Contato Listagem" args="[entityName]" />
+				</div>
+			</g:link>
+			<g:link class="create" action="create">
+				<div class="tiny ui button">
+					<i class="icon add user"></i>
+					<g:message code="Novo Contato" args="[entityName]" />
+				</div>
+			</g:link>
+			
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -26,16 +33,22 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form method="post" >
+			<g:form class="ui form" method="post" >
 				<g:hiddenField name="id" value="${pessoaInstance?.id}" />
 				<g:hiddenField name="version" value="${pessoaInstance?.version}" />
-				<fieldset class="form">
-					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
+				<g:render template="form"/>
+				<g:link action="update">
+					<div class="tiny labeled ui button">
+						<i class="icon refresh"></i>
+						<g:message code="default.button.update.label" args="Update" />
+					</div>
+				</g:link>
+				<g:link action="delete">
+					<div class="tiny labeled ui button">
+						<i class="icon trash"></i>
+						<g:message code="default.button.delete.label" args="Delete" />
+					</div>
+				</g:link>
 			</g:form>
 		</div>
 	</body>

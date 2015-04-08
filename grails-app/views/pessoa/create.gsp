@@ -8,13 +8,12 @@
 					
 	</head>
 	<body>
-		<a href="#create-pessoa" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link class="list" action="list"><g:message code="Contato Listagem" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-		<div id="create-pessoa" class="content scaffold-create" role="main">
+		<div id="create-pessoa" role="main">
 			<h1><g:message code="Criar Contato" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
@@ -26,7 +25,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" >
+			<g:form action="save">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

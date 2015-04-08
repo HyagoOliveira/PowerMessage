@@ -5,6 +5,28 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'grupo.label', default: 'Grupo')}" />
 		<title><g:message code="default.edit.label" args="[entityName]" /></title>
+		<script type="text/javascript">
+
+		function selectAll(idTabela){
+			$('#' + idTabela + ' input:checkbox').prop('checked', $('#' + idTabela + ' th input:checkbox').is(':checked'));
+		}
+		
+		var currentValue = 0;
+		
+		function handleClick(myRadio) {
+			var idTabela = $(myRadio).val();			
+		    if(myRadio.value.indexOf("tabelaContatos") > -1) {
+		    	$("#tabelaContatos").show();
+		    	$("#tabelaGrupos").hide();
+		    	$("#tabelaGrupos input:checkbox").prop("checked", false);
+			} else {
+				$("#tabelaContatos").hide();
+		    	$("#tabelaGrupos").show();
+		    	$("#tabelaContatos input:checkbox").prop("checked", false);
+			}
+		}
+		
+		</script>
 	</head>
 	<body>
 		<a href="#edit-grupo" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>

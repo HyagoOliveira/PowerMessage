@@ -3,16 +3,16 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'associacao.label', default: 'Associacao')}" />
+		<g:set var="entityName" value="${message(code: 'associacao.label', default: 'Associação')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<a href="#create-associacao" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="list" action="list"><g:message code="Associação Listagem" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
+		<g:link class="list" action="list">
+				<div class="tiny ui button">
+					<i class="icon list"></i>
+					<g:message code="default.list.label" args="[entityName]" />
+				</div>
+			</g:link>
 		<div id="create-associacao" class="content scaffold-create" role="main">
 			<h1><g:message code="Criar Associação" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -25,7 +25,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save" >
+			<g:form action="save"  class="ui form">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

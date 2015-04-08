@@ -1,6 +1,5 @@
+
 <%@ page import="com.acception.powermessage.Mensagem"%>
-<%@ page import="com.acception.powermessage.Grupo"%>
-<%@ page import="com.acception.usuario.Pessoa"%>
 
 <script type="text/javascript">
 	function updatePessoasList(value) {
@@ -8,52 +7,94 @@
 			"id" : value,
 			selection : 1
 		}
-
 		<g:remoteFunction controller="mensagem" action="grupoChangeSelection" 
 			update ="divpessoa" params="parameters" />
-
 		
-
 		pessoasSelect.selectedIndex = 0;
 		pessoasSelect.selectedIndex = 1;
-
 	}
 </script>
 
-<div
-	class="fieldcontain ${hasErrors(bean: mensagemInstance, field: 'texto', 'error')} required">
-	<label for="texto"> <g:message code="mensagem.texto.label"
-			default="Texto" /> <span class="required-indicator">*</span>
-	</label>
-	<g:textArea name="texto" cols="40" rows="5" maxlength="512" required=""
-		value="${mensagemInstance?.texto}" />
+<div class="ui form">
+	<div class="field">
+		<h3>
+			<label for="texto"> <g:message code="mensagem.texto.label"
+					default="Texto" /> <span class="required-indicator">*</span>
+			</label>
+		</h3>
+		<g:textArea name="texto" value="${mensagemInstance?.texto}" />
+	</div>
+	
+	<div class="field">
+		<h3>
+			<label for="texto">Destinatários <span class="required-indicator">*</span></label>
+		</h3>
+		<g:radio name="myGroup" value="tabelaContatos" checked="true" onclick="handleClick(this);" style="padding-left:20px; "/> 
+		Todos os Contatos
+		<g:radio name="myGroup" value="tabelaGrupos" onclick="handleClick(this);"/>
+		Grupos
+ 	</div>
 </div>
 
-<div
-	class="fieldcontain ${hasErrors(bean: mensagemInstance, field: 'grupos', 'error')} ">
+<g:if test="${com.acception.powermessage.Grupo.list()}">
+	<table id="tabelaGrupos" hidden="true" class="ui table">
+		<thead>
+			<tr>
+				<th><g:checkBox name="checkBoxGrupos" checked="false" onchange="selectAll('tabelaGrupos')"/></th>
+				<g:sortableColumn property="nome"
+					title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
 
-	<g:if test="${Grupo.list()}">
-		<label for="grupos"> <g:message code="mensagem.grupos.label"
-				default="Grupos" />
-		</label>
-		<g:select name="grupos" from="${Grupo.list()}"
-			multiple="multiple" optionKey="id" size="5"
-			onchange="updatePessoasList(this.value)"
-			value="${mensagemInstance?.grupos*.id}" class="many-to-many" />
+				<g:sortableColumn property="descricao"
+					title="${message(code: 'pessoa.telefone2.label', default: 'Descrição')}" />
+			</tr>
+		</thead>
+		<tbody>
+			<g:each in="${com.acception.powermessage.Grupo.list()}" status="i"
+				var="grupoInstance">
+				
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					<td>
+					 	<g:checkBox name="grupos" value="${grupoInstance.id}" checked="false"/>
+					 </td>
+						<td>
+							<a href="${createLink(uri: '/grupo/show/' + fieldValue(bean: grupoInstance, field: "id"))}">${fieldValue(bean: grupoInstance, field: "nome")}</a>
+						</td>
+						<td>
+							${fieldValue(bean: grupoInstance, field: "pessoas")}						
+						</td>
+					</tr>
+			</g:each>
+		</tbody>
+	</table>
+</g:if>
+<g:if test="${com.acception.usuario.Pessoa.list()}">
+	<table id="tabelaContatos" class="ui table">
+		<thead>
+			<tr>
+				<th><g:checkBox id="teste" class="ui checkbox" name="checkBoxPessoas" checked="false"onchange="selectAll('tabelaContatos')"/></th>
+				<g:sortableColumn property="nome"
+					title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
+
+				<g:sortableColumn property="descricao"
+					title="${message(code: 'pessoa.descricao.label', default: 'Descrição')}" />
+			</tr>
+		</thead>
+		<tbody>
+			<g:each in="${com.acception.usuario.Pessoa.list()}" status="i"
+				var="pessoaInstance">
+				
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					<td>
+					 	<g:checkBox name="contatos" class="ui checkbox" value="${pessoaInstance.id}" checked="false"  />
+					 </td>
+						<td>
+							<a href="${createLink(uri: '/pessoa/show/' + fieldValue(bean: pessoaInstance, field: "id"))}">${fieldValue(bean: pessoaInstance, field: "nome")}</a>
+						</td>
+						<td>
+							${fieldValue(bean: pessoaInstance, field: "telefones")}
+						</td>
+					</tr>
+			</g:each>
+		</tbody>
+	</table>
 	</g:if>
-
-</div>
-
-<div id="divpessoa"
-	class="fieldcontain ${hasErrors(bean: mensagemInstance, field: 'pessoas', 'error')} ">
-	<g:if test="${Pessoa.list()}">
-		<label for="pessoas"> <g:message code="mensagem.pessoas.label"
-				default="Pessoas" /> <span class="required-indicator">*</span>
-		</label>
-		<g:select name="pessoas" from="${Pessoa.list()}"
-			multiple="multiple" optionKey="id" size="5" id="pessoasSelect"
-			value="${mensagemInstance?.pessoas*.id}" class="many-to-many" />
-	</g:if>
-
-</div>
-

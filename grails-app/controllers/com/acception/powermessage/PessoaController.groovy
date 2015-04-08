@@ -14,7 +14,7 @@ class PessoaController {
 
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        [pessoaInstanceList: Pessoa.ativos.list(params), pessoaInstanceTotal: Pessoa.count()]
+        [pessoaInstanceList: Pessoa.ativos.list(params), pessoaInstanceTotal: Pessoa.ativos.count()]
     }
 
     def create() {		

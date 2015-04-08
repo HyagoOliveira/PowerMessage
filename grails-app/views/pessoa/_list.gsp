@@ -1,4 +1,3 @@
-
 <div id=listaContato>
 <g:if test="${contatos?.size() > 0 }">
 	<table>

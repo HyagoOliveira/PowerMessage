@@ -5,30 +5,27 @@
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'associacao.label', default: 'Associacao')}" />
+	value="${message(code: 'associacao.label', default: 'Associação')}" />
 <title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
-	<a href="#list-associacao" class="skip" tabindex="-1"><g:message
-			code="default.link.skip.label" default="Skip to content&hellip;" /></a>
-	<div class="nav" role="navigation">
-		<ul>
-			<li><g:link class="create" action="create">
-					<g:message code="Nova Associação" args="[entityName]" />
-				</g:link></li>
-		</ul>
-	</div>
 	<div id="list-associacao" class="content scaffold-list" role="main">
 		<h1>
 			<g:message code="Associação Listagem" args="[entityName]" />
 		</h1>
+		<g:link action="create">
+			<div class="tiny ui button">
+				<i class="icon building"></i>
+				<g:message code="default.new.label.noun.female" args="[entityName]" />
+			</div>
+		</g:link>
 		<g:if test="${flash.message}">
 			<div class="message" role="status">
 				${flash.message}
 			</div>
 		</g:if>
 		<g:if test="${associacaoInstanceTotal > 0}">
-			<table>
+			<table  class="ui table">
 				<thead>
 					<tr>
 						<g:sortableColumn property="nome"
@@ -68,7 +65,7 @@
 		</g:if>
 		<g:else>
 			<div class="pagination">
-				<h1>Não há associações cadastradas.</h1>
+				<h1>Não há Associações cadastradas.</h1>
 			</div>
 		</g:else>
 	</div>

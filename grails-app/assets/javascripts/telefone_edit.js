@@ -10,10 +10,16 @@ function applyMask() {
 function addPhone(){
 	var row;
 	row = "<div id='phone' class='fieldcontain'>";
-	row += "<label for='telefone'>Telefone</label>";
+	row += "<label for='telefone'>Telefone </label>";
+	row += "<div class='ui input'>";
 	row += "<input class='ddd' name='ddd' size='2' required=''/>";
+	row += "</div>";
+	row += "<div class='ui input'>";
 	row += "<input class='phone' name='numero' required=''/>";
-	row += "<input type='button' class='button' value=' - ' onclick='removePhone(this)'/>";
+	row += "</div>";
+	row += "<div style='margin-left:5px;' class='tiny red labeled ui button' onclick='removePhone(this)'>";
+	row += "<i class='icon minus'></i>";
+	row += "</div>";
 	row += "</div>";
 	$("#telefonesTable").append(row);
 	applyMask();

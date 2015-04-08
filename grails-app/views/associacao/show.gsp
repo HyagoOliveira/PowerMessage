@@ -38,11 +38,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${associacaoInstance?.endereco}">
-					<g:render template="/endereco/show" bean="${associacaoInstance?.endereco}" var="enderecoInstance"  ></g:render>
-				</g:if>
-			
-				
 				<g:if test="${associacaoInstance?.username}">
 				<li class="fieldcontain">
 					<span id="username-label" class="property-label"><g:message code="associacao.username.label" default="Nome de Usuário" /></span>
@@ -51,6 +46,11 @@
 					
 				</li>
 				</g:if>
+				<g:if test="${associacaoInstance?.endereco}">
+					<g:render template="/endereco/show" bean="${associacaoInstance?.endereco}" var="enderecoInstance"  ></g:render>
+				</g:if>
+			
+				
 			
 			</ol>
 			<g:form>
