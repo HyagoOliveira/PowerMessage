@@ -1,37 +1,36 @@
 <%@ page import="com.acception.powermessage.Associacao" %>
-
-
-
-<div class="fieldcontain ${hasErrors(bean: associacaoInstance, field: 'nome', 'error')} required">
-	<label for="nome">
-		<g:message code="associacao.nome.label" default="Nome" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="nome" required="" value="${associacaoInstance?.nome}"/>
+<div class="ui attached message" hidden="true">
+  <div class="header">
+    Welcome to our site!
+  </div>
+  <p>Fill out the form below to sign-up for a new account</p>
 </div>
-
-<div class="fieldcontain ${hasErrors(bean: associacaoInstance, field: 'email', 'error')} required">
-	<label for="email">
-		<g:message code="associacao.email.label" default="Email" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="email" required="" value="${associacaoInstance?.email}"/>
+<h4 class="ui dividing header">Informações Básicas</h4>
+<div class="two fields">
+    <div class="required field ">     
+      <label> Nome</label>
+      <input placeholder="Nome" type="text"  name="nome" value="${associacaoInstance?.nome}">
+    </div>
+    <div class="required field">
+      <label>E-mail</label>
+      <input name="email" placeholder="E-mail" type="text" value="${associacaoInstance?.email}">
+    </div>
 </div>
-
 <g:render template="/endereco/form"></g:render>
-
-<div class="fieldcontain ${hasErrors(bean: associacaoInstance, field: 'username', 'error')} required">
-	<label for="username">
-		Login
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="username" required="" value="${associacaoInstance?.username}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: associacaoInstance, field: 'password', 'error')} required">
-	<label for="password">
-		<g:message code="associacao.password.label" default="Senha" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:passwordField name="password" type="password" value=""/>
-</div>
+<h4 class="ui dividing header">Informações de Login</h4>
+<div class="two fields">
+    <div class="required field">
+      <label>Nome de Usuário</label>
+      <div class="ui icon input">
+        <input type="text" placeholder="Username" value="${associacaoInstance?.username}" name="username">
+        <i class="user icon"></i>
+      </div>
+    </div>
+    <div class="required field">
+      <label>Senha</label>
+      <div class="ui icon input">
+        <input name="password"  type="password" value="">
+        <i class="lock icon"></i>
+      </div>
+    </div>
+  </div>

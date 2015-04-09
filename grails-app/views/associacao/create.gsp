@@ -19,19 +19,18 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<g:hasErrors bean="${associacaoInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${associacaoInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
+				<ul class="errors" role="alert">
+					<g:eachError bean="${associacaoInstance}" var="error">
+					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+					</g:eachError>
+				</ul>
 			</g:hasErrors>
 			<g:form action="save"  class="ui form">
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
-				<fieldset class="buttons">
-					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
-				</fieldset>
+				<br>
+					<g:submitButton name="create" class="tiny labeled ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 			</g:form>
 		</div>
 	</body>

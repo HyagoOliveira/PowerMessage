@@ -8,7 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class AssociacaoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+	def springSecurityService
     def index() {
         redirect(action: "list", params: params)
     }
@@ -77,11 +77,20 @@ class AssociacaoController {
     def update(Long id, Long version) {
         def associacaoInstance = Associacao.get(id)
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'associacao.label', default: 'Associacao'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'associacao.label', default: 'Associação'), id])
             redirect(action: "list")
             return
         }
-
+		println springSecurityService.encodePassword(params.password)
+		println associacaoInstance.password
+		if (!springSecurityService.encodePassword(params.password).equals(associacaoInstance.password)){		
+			associacaoInstance.errors.rejectValue(null, null,
+				null,
+				"A senha não está correta. Digite a senha certa e tente novamente.")
+		  render(view: "edit", model: [associacaoInstance: associacaoInstance])
+		  return
+		}
+		
         if (version != null) {
             if (associacaoInstance.version > version) {
                 associacaoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
@@ -94,7 +103,6 @@ class AssociacaoController {
 
         associacaoInstance.properties = params
 		associacaoInstance.endereco = new Endereco(params)
-
         if (!associacaoInstance.save(flush: true)) {
             render(view: "edit", model: [associacaoInstance: associacaoInstance])
             return
