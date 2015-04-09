@@ -4,8 +4,7 @@ import com.acception.usuario.*;
 
 
 fixture {
-	def associacao = Associacao.findByNome('Acception Tecnologias');
-	if(associacao)
+	if(Associacao.findByNome('Acception Tecnologias'))
 		return
 	
 	println "Criando associação Acception Tecnologias!"
@@ -30,7 +29,7 @@ fixture {
 		nome: 'Acception Tecnologias', 
 		email:'acception@acception.com.br',
 		endereco: enderecoI);
-	
-	adminPermissao(Permissao, authority: 'ROLE_ADMIN')	
-	administradorPermisao(UsuarioPermissao, usuario: acceptionTecnologia, permissao: adminPermissao)
+
+	administradorUserRole(UsuarioPermissao, usuario: acceptionTecnologia,
+			permissao: Permissao.findByAuthority('ROLE_ASSOCIACAO'))
 }

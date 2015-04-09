@@ -32,7 +32,7 @@
 				<a class="item" href="${createLink(uri: '/' )}" class="item">
 					<i class="home icon"></i>Home
 				</a>
-				<sec:ifAnyGranted roles="ROLE_ADMIN">
+				<sec:ifAnyGranted roles="ROLE_ASSOCIACAO">
 					<g:link controller="mensagem" action="create" class="item">
 						<i class="mail icon"></i> Enviar Mensagem
 					</g:link>
@@ -47,7 +47,7 @@
 					</g:link>
 				</sec:ifAnyGranted>
 
-				<sec:ifAnyGranted roles="ROLE_SUPER_ADMIN">
+				<sec:ifAnyGranted roles="ROLE_ADMIN">
 					<g:link controller="associacao" action="index" class="item">
 						<i class="building icon"></i>Associação
 					</g:link>

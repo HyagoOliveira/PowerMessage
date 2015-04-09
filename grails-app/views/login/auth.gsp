@@ -12,11 +12,11 @@
 			<p>Seja bem-vindo(a) ao PowerMessage, o sistema de envio de
 				mensagens desenvolvido pela equipe da Acception Tecnologia.</p>
 		</sec:ifNotLoggedIn>
-		<sec:ifAnyGranted roles="ROLE_SUPER_ADMIN">
+		<sec:ifAnyGranted roles="ROLE_ADMIN">
 			<p>Seja bem-vindo(a), Super Administrador, ao sistema de envio de
 				mensagens desenvolvido pela equipe da Acception Tecnologia.</p>
 		</sec:ifAnyGranted>
-		<sec:ifAnyGranted roles="ROLE_ADMIN">
+		<sec:ifAnyGranted roles="ROLE_ASSOCIACAO">
 			<p>Seja bem-vindo(a), <sec:username/>, ao sistema de envio de
 				mensagens desenvolvido pela equipe da Acception Tecnologia.</p>
 		</sec:ifAnyGranted>

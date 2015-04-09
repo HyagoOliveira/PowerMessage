@@ -132,14 +132,14 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                  	['permitAll'],
 	'/index':             	['permitAll'],
 	'/index.gsp':         	['permitAll'],
-	'/login/error.gsp': 	['ROLE_ADMIN, ROLE_SUPER_ADMIN'],
-	'/login/admin.gsp': 	['ROLE_ADMIN, ROLE_SUPER_ADMIN'],
+	'/login/error.gsp': 	['ROLE_ADMIN, ROLE_ASSOCIACAO'],
+	'/login/admin.gsp': 	['ROLE_ADMIN, ROLE_ASSOCIACAO'],
 	'/mensagem/**': 		['IS_AUTHENTICATED_ANONYMOUSLY'],
 	'/mensagem/criarGcm': 	['IS_AUTHENTICATED_ANONYMOUSLY'],
-	'/grupo/**': 			['ROLE_ADMIN'],
-	'/pessoa/**': 			['ROLE_ADMIN'],
-	'/associacao/**': 		['ROLE_SUPER_ADMIN'],
-	'/mensagem/index':		['ROLE_ADMIN'],
+	'/grupo/**': 			['ROLE_ASSOCIACAO'],
+	'/pessoa/**': 			['ROLE_ASSOCIACAO'],
+	'/associacao/**': 		['ROLE_ADMIN'],
+	'/mensagem/index':		['ROLE_ASSOCIACAO'],
 	'/**':               	['IS_AUTHENTICATED_ANONYMOUSLY']
 ];
 

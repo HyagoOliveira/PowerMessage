@@ -1,15 +1,13 @@
 import com.acception.authentication.*;
 
-
 fixture {
-	def administrador = Usuario.findByUsername('suporte.acception');
-	if(administrador)
+
+	if(Usuario.findByUsername('suporte.acception'))
 		return
 	
-	println "Criando usuário super administrador!"
-	
-	superPermissao(Permissao, authority: 'ROLE_SUPER_ADMIN')
-	superAdminstrador(Usuario, 
+	println "Criando usuário administrador!"
+
+	adminstrador(Usuario,
 		username: "suporte.acception",
 		password: "jmml72",
 		enabled: true,
@@ -17,5 +15,6 @@ fixture {
 		accountLocked: false,
 		passwordExpired:false)
 	
-	superAdministradorPermisao(UsuarioPermissao, usuario: superAdminstrador, permissao: superPermissao)
+	administradorUserRole(UsuarioPermissao, usuario: adminstrador,
+			permissao: Permissao.findByAuthority('ROLE_ADMIN'))
 }

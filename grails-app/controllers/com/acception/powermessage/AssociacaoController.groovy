@@ -32,23 +32,18 @@ class AssociacaoController {
 		associacaoInstance.accountLocked=false
 		associacaoInstance.passwordExpired=false
 		
-		Permissao administradorPermissao = Permissao.findByAuthority("ROLE_ADMIN")
-		if(administradorPermissao == null){
-			administradorPermissao = new Permissao(authority: "ROLE_ADMIN").save(flush:true)
-		}	
-		
 		
         if (!associacaoInstance.save(flush: true)) {
             render(view: "create", model: [associacaoInstance: associacaoInstance])
             return
         }
+
+        new UsuarioPermissao(usuario: associacaoInstance,
+                permissao: Permissao.findByAuthority("ROLE_ASSOCIACAO")).save(flush:true)
+
 		
-		if(UsuarioPermissao.findByUsuarioAndPermissao(associacaoInstance, administradorPermissao) == null){
-			new UsuarioPermissao(usuario: associacaoInstance, permissao: administradorPermissao).save(flush:true)
-		}
 		
-		
-        flash.message = message(code: 'default.created.message', args: [message(code: 'associacao.label', default: 'Associacao'), associacaoInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'associacao.label', default: 'Associacao'), associacaoInstance.username])
         redirect(action: "show", id: associacaoInstance.id)
     }
 
