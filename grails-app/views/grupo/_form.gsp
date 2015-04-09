@@ -1,12 +1,13 @@
 <%@ page import="com.acception.powermessage.Grupo" %>
 <%@ page import="com.acception.usuario.Pessoa" %>
 
+
 <div>
 	<div class="ui labeled input">
 		<div class="ui label">
     		<i class="icon users"></i>
   		</div>
-		<g:textField name="nome" placeholder="Insira o nome do grupo" size="50" value="${grupoInstance?.nome}"/>
+		<g:textField name="nome" required placeholder="Insira o nome do grupo" size="50" value="${grupoInstance?.nome}"/>
 	</div>
 </div>
 
@@ -21,7 +22,7 @@
 		<table id="tabelaPessoas" class="ui table">
 			<thead>
 				<tr>
-					<th><g:checkBox id="teste" name="checkBoxPessoas" checked="false"onchange="selectAll('tabelaPessoas')"/></th>
+					<th><g:checkBox id="teste" name="checkBoxPessoas" required oninvalid="this.setCustomValidity('Selecione um contato')" checked="false"onchange="selectAll('tabelaPessoas')"/></th>
 					<g:sortableColumn property="nome"
 						title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
 	

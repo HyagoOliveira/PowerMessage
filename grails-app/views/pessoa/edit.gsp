@@ -37,12 +37,7 @@
 				<g:hiddenField name="id" value="${pessoaInstance?.id}" />
 				<g:hiddenField name="version" value="${pessoaInstance?.version}" />
 				<g:render template="form"/>
-				<g:link action="update">
-					<div class="tiny labeled ui button">
-						<i class="icon refresh"></i>
-						<g:message code="default.button.update.label" args="Update" />
-					</div>
-				</g:link>
+				<g:actionSubmit value="Alterar" action="update" class="tiny labeled ui button"/>
 				<g:link action="delete">
 					<div class="tiny labeled ui button">
 						<i class="icon trash"></i>
