@@ -80,5 +80,7 @@ grails.project.dependency.resolution = {
 		
 		compile ":console:1.5.4"
 		compile ":fixtures:1.3"
+
+        compile ":rest:0.8"
     }
 }

@@ -3,74 +3,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="layout" content="main">
-<g:set var="entityName"
-	value="${message(code: 'mensagem.label', default: 'Mensagem')}" />
-<title><g:message code="default.list.label" args="[entityName]" /></title>
+	<meta name="layout" content="main">
+	<g:set var="entityName"
+		   value="${message(code: 'mensagem.label', default: 'Mensagem')}" />
+	<title><g:message code="default.list.label" args="[entityName]" /></title>
 </head>
 <body>
-	<div id="list-mensagem" class="content scaffold-list" role="main">
-		<h1>
-			<g:message code="default.list.label" args="[entityName]" />
-		</h1>
-		<g:if test="${flash.message}">
-			<div class="message" role="status">
-				${flash.message}
-			</div>
-		</g:if>
-		<g:if test="${mensagemInstanceList?.size() > 0}">
-			<table class="ui table">
-				<thead>
-					<tr>
+<div id="list-mensagem" class="content scaffold-list" role="main">
+	<h1>
+		<g:message code="default.list.label" args="[entityName]" />
+	</h1>
+	<g:if test="${flash.message}">
+		<div class="message" role="status">
+			${flash.message}
+		</div>
+	</g:if>
+	<g:if test="${mensagemInstanceList?.size() > 0}">
+		<table class="ui table">
+			<thead>
+			<tr>
 
-						<g:sortableColumn property="texto"
-							title="${message(code: 'mensagem.texto.label', default: 'Texto')}" />
+				<g:sortableColumn property="texto"
+								  title="${message(code: 'mensagem.texto.label', default: 'Texto')}" />
 
-						<g:sortableColumn property="dataEnvio"
-							title="${message(code: 'mensagem.dataEnvio.label', default: 'Data Envio')}" />
+				<g:sortableColumn property="dataEnvio"
+								  title="${message(code: 'mensagem.dataEnvio.label', default: 'Data Envio')}" />
 
-						<g:sortableColumn property="msgStatus"
-							title="${message(code: 'mensagem.msgStatus.label', default: 'Msg Status')}" />
+				<g:sortableColumn property="msgStatus"
+								  title="${message(code: 'mensagem.msgStatus.label', default: 'Status')}" />
 
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<g:each in="${mensagemInstanceList}" status="i"
-						var="mensagemInstance">
-						<g:if test="${mensagemInstance.flag.contains('true')}">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<g:each in="${mensagemInstanceList}" status="i"
+					var="mensagemInstance">
+				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-								<td><g:link action="show" id="${mensagemInstance.id}">
-										${fieldValue(bean: mensagemInstance, field: "texto")}
-									</g:link></td>
+					<td><g:link action="show" id="${mensagemInstance.id}">
+						${fieldValue(bean: mensagemInstance, field: "texto")}
+					</g:link></td>
 
-								<td><g:formatDate format="dd MMMM, yyyy" date="${mensagemInstance.dataEnvio}" /></td>
+					<td><g:formatDate format="dd MMMM, yyyy" date="${mensagemInstance.dataEnvio}" /></td>
 
-								<td>
-									${fieldValue(bean: mensagemInstance, field: "msgStatus")}
-								</td>
+					<td>
+						${fieldValue(bean: mensagemInstance, field: "msgStatus")}
+					</td>
 
-								<td><a href="${createLink(uri: '/mensagem/create?texto=' + fieldValue(bean: mensagemInstance, field: "texto"))}">
-										<i class="icon reply"></i>Encaminhar
-									</a>
-								</td>
-							</tr>
-						</g:if>
-					</g:each>
-				</tbody>
-			</table>
+					<td><a href="${createLink(uri: '/mensagem/create?texto=' + fieldValue(bean: mensagemInstance, field: "texto"))}">
+						<i class="icon reply"></i>Encaminhar
+					</a>
+					</td>
+				</tr>
 
-			<div class="pagination">
-				<g:paginate total="${mensagemInstanceTotal}" />
-			</div>
+			</g:each>
+			</tbody>
+		</table>
 
-		</g:if>
-		<g:else>
-			<div class="pagination">
-				Não há messagens.
-			</div>
-		</g:else>
-	</div>
+		<div class="pagination">
+			<g:paginate total="${mensagemInstanceTotal}" />
+		</div>
+
+	</g:if>
+	<g:else>
+		<div class="pagination">
+			Não há messagens.
+		</div>
+	</g:else>
+</div>
 </body>
 </html>
