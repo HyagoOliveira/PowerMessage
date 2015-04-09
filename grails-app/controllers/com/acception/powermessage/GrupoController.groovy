@@ -1,4 +1,5 @@
 package com.acception.powermessage
+import com.acception.usuario.Pessoa
 
 import org.springframework.dao.DataIntegrityViolationException
 
@@ -21,11 +22,19 @@ class GrupoController {
 
     def save() {
         def grupoInstance = new Grupo(params)
-        if (!grupoInstance.save(flush: true)) {
-            render(view: "create", model: [grupoInstance: grupoInstance])
-            return
-        }
-
+       
+		if(params['pessoas'] == null){
+			println "yes"
+			grupoInstance.errors.rejectValue(null, null,
+				null,
+				"Um grupo não pode ser criado sem contatos.")
+				render(view: "create", model: [grupoInstance: grupoInstance])
+				return
+		}
+		if (!grupoInstance.save(flush: true)) {
+			render(view: "create", model: [grupoInstance: grupoInstance])
+			return
+		}
         flash.message = message(code: 'default.created.message', args: [message(code: 'grupo.label', default: 'Grupo'), grupoInstance.id])
         redirect(action: "show", id: grupoInstance.id)
     }
@@ -54,6 +63,16 @@ class GrupoController {
 
     def update(Long id, Long version) {
         def grupoInstance = Grupo.get(id)
+		if(!params['pessoas']){
+			
+			grupoInstance.errors.rejectValue(null, null,
+				null,
+				"Um grupo não pode ser criado sem contatos.")
+	  render(view: "edit", model: [grupoInstance: grupoInstance])
+	  return
+		}
+
+		
         if (!grupoInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'grupo.label', default: 'Grupo'), id])
             redirect(action: "list")
@@ -69,8 +88,22 @@ class GrupoController {
                 return
             }
         }
-
-        grupoInstance.properties = params
+	
+	
+        grupoInstance.nome = params.nome
+		def savedPeople = grupoInstance.pessoas.id
+		def updatedPeople = params['pessoas']
+		
+		
+		for(person in savedPeople){				
+				def pessoa = Pessoa.findById(person)
+				grupoInstance.pessoas.remove(pessoa)
+		}
+		
+		for(person in updatedPeople){
+			def pessoa = Pessoa.findById(person)
+			grupoInstance.pessoas.add(pessoa)
+	}
 
         if (!grupoInstance.save(flush: true)) {
             render(view: "edit", model: [grupoInstance: grupoInstance])

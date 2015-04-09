@@ -20,7 +20,7 @@
 			</div>
 		</g:link>
 		<g:if test="${flash.message}">
-			<div class="message" role="status">
+			<div class="ui info message" role="status">
 				${flash.message}
 			</div>
 		</g:if>

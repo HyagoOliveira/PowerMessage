@@ -2,27 +2,39 @@
 <%@ page import="com.acception.usuario.Pessoa" %>
 
 
+<g:hasErrors bean="${grupoInstance}">
+	<div class="ui negative message">		
+		<div class="header">Há erros no seu cadastro:</div>
+		<ul class="list" role="alert">
+			<g:eachError bean="${grupoInstance}" var="error">
+				<li
+					<g:if test="${error in org.springframework.validation.FieldError}"> data-field-id="${error.field}"</g:if>><g:message
+						error="${error}" /></li>
+			</g:eachError>
+		</ul>
+	</div>
+</g:hasErrors>
+
 <div>
-	<div class="ui labeled input">
-		<div class="ui label">
-    		<i class="icon users"></i>
-  		</div>
-		<g:textField name="nome" required placeholder="Insira o nome do grupo" size="50" value="${grupoInstance?.nome}"/>
+<div class="required field">
+		<label> Nome do Grupo </label>
+		<div class="ui input field">
+			<g:textField name="nome" required=""
+				value="${grupoInstance?.nome}" />
+		</div>
 	</div>
 </div>
 
 <br/>
-<div>
-	<h3>
+<div class="required field">
 		<label for="pessoas">
 			Escolha os contatos para adicionar ao grupo
 		</label>
-	</h3>
 	<g:if test="${com.acception.usuario.Pessoa.list()}">
 		<table id="tabelaPessoas" class="ui table">
 			<thead>
 				<tr>
-					<th><g:checkBox id="teste" name="checkBoxPessoas" required oninvalid="this.setCustomValidity('Selecione um contato')" checked="false"onchange="selectAll('tabelaPessoas')"/></th>
+					<th><g:checkBox id="teste" name="checkBoxPessoas" checked="false"onchange="selectAll('tabelaPessoas')"/></th>
 					<g:sortableColumn property="nome"
 						title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
 	
