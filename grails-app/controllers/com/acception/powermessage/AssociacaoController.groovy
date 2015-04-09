@@ -39,9 +39,7 @@ class AssociacaoController {
         }
 
         new UsuarioPermissao(usuario: associacaoInstance,
-                permissao: Permissao.findByAuthority("ROLE_ASSOCIACAO")).save(flush:true)
-
-		
+                permissao: Permissao.findByAuthority("ROLE_ASSOCIACAO")).save(flush:true)	
 		
 
         flash.message = message(code: 'default.created.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.id])
@@ -79,13 +77,13 @@ class AssociacaoController {
             return
         }
 		
-		if (!springSecurityService.encodePassword(params.password).equals(associacaoInstance.password)){		
-			associacaoInstance.errors.rejectValue(null, null,
-				null,
-				"A senha inserida não está correta. Digite a senha correta e tente novamente.")
-		  render(view: "edit", model: [associacaoInstance: associacaoInstance])
-		  return
-		}
+//		if (!springSecurityService.encodePassword(params.password).equals(associacaoInstance.password)){		
+//			associacaoInstance.errors.rejectValue(null, null,
+//				null,
+//				"A senha inserida não está correta. Digite a senha correta e tente novamente.")
+//		  render(view: "edit", model: [associacaoInstance: associacaoInstance])
+//		  return
+//		}
 		
         if (version != null) {
             if (associacaoInstance.version > version) {

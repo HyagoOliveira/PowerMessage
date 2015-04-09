@@ -57,7 +57,7 @@
 				</sec:ifAnyGranted>
 
 				<sec:ifLoggedIn>
-					<g:link controller="logout" class="ui item right">Logout</g:link>
+					<g:link controller="logout" class="ui item right">Logout <i class="sign out icon"></i></g:link>
 				</sec:ifLoggedIn>
 		</div>
 	</sec:ifLoggedIn>

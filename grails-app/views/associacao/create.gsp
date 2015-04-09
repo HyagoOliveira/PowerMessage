@@ -21,9 +21,15 @@
 			
 			<g:form action="save"  class="ui form">
 					<g:render template="form"/>
-				<br>
-					<g:submitButton name="create" class="tiny labeled ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+				<br><i class="icon save" style="position: absolute;
+				z-index: 1;
+				vertical-align: bottom;
+				opacity: 0.6 !important;
+				padding: 8px;
+				margin-left:3px;"></i>
+					<g:submitButton action="create" name="create" style="padding-left:28px;" class="tiny labeled ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 			</g:form>
+			<br><br>
 		</div>
 	</body>
 </html>

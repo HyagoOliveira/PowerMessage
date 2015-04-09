@@ -78,9 +78,13 @@
 					<g:message code="default.button.edit.label" default="Edit" />
 				</div>
 			</g:link>
-			<g:actionSubmit class="remove tiny labeled ui button" action="delete"
-				value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
-				onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>				
+			<i class="icon trash" style="position: absolute;
+				z-index: 1;
+				vertical-align: bottom;
+				opacity: 0.6 !important;
+				padding: 8px;
+				margin-left:3px;"></i>
+				<g:actionSubmit class="tiny ui button" style="padding-left:28px;" action="delete" code="default.button.delete.label" value="Remover" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 		</g:form>
 	</div>
 
