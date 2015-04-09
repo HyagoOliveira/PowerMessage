@@ -6,7 +6,7 @@ class Mensagem {
 	String texto
 	Date dataEnvio
 	Integer tentativas
-	MsgStatus msgStatus	
+	MsgStatus msgStatus
 
 	static hasMany = [grupos: Grupo, pessoas: Pessoa]	
 	static belongsTo = [Associacao, Pessoa, Grupo]

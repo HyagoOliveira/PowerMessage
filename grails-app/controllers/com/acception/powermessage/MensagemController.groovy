@@ -1,14 +1,12 @@
 package com.acception.powermessage
 
-
 import com.acception.gcm.Gcm
-import grails.converters.JSON
-import org.springframework.dao.DataIntegrityViolationException
 import com.acception.usuario.Pessoa
+import com.acception.powermessage.SmsService
 
 class MensagemController {
 
-	def post2GcmService;
+	def smsService;
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -22,8 +20,8 @@ class MensagemController {
 	}
 
 	def create() {
-		if(Pessoa.list().size()==0) {
-			flash.message = "Você não possui contatos para poder enviar mensagens."
+		if(Pessoa.ativos.list().size() == 0) {
+			flash.message = "Você não possui contatos para enviar mensagens."
 			redirect(action: "list")
 			return;
 		}
@@ -32,71 +30,41 @@ class MensagemController {
 	}
 
 	def save() {
-
 		def mensagemInstance = new Mensagem(params)
-		mensagemInstance.dataEnvio = new Date()
-		mensagemInstance.msgStatus = MsgStatus.ENVIANDO
-		mensagemInstance.tentativas = new Integer(1)
-		mensagemInstance.flag = "true"
 
-		if(params.pessoas==null && params.grupos==null){
-			flash.message = "Você deve selecionar um destinatário."
-			render(view: "create", model: [mensagemInstance: mensagemInstance])
-			return
-		}
+		switch (params.myGroup){
 
-		if (!mensagemInstance.save(flush: true)) {
-			render(view: "create", model: [mensagemInstance: mensagemInstance])
-			return
-		}
+			case 'tabelaContatos':
+				println("via contatos selecionado")
+				println("PARAMS: $params")
 
-		def todosIds = [] as Set
-
-		if(params.pessoas) {
-			for (element in params.pessoas) {
-				todosIds << (String) element
-			}
-		}
-
-		if(params.grupos) {
-			for (idGrupo in params.grupos) {
-				def grupoInst = Grupo.findById(idGrupo);
-
-				def pessoasIdList = grupoInst.pessoas*.id;
-				for (element in pessoasIdList) {
-					todosIds << (String) element
+				if(!params.contatos){
+					flash.message = "Você deve selecionar pelo menos um contato."
+					render(view: "create", model: [mensagemInstance: mensagemInstance])
+					return
 				}
-			}
+
+				flash.message = "Enviando Mensagem..."
+				smsService.send(mensagemInstance, params.contatos)
+				break
+
+			case 'tabelaGrupos':
+				println("via grupos selecionado")
+
+				if(!params.grupos ){
+					flash.message = "Você deve selecionar pelo menos um grupo."
+					render(view: "create", model: [mensagemInstance: mensagemInstance])
+					return
+				}
+
+				flash.message = "Enviando Mensagem..."
+				smsService.send(mensagemInstance, Grupo.get(params.grupos).pessoas*.id)
+				break
 		}
 
-		String ids = "";
-		(todosIds).each { ids+="$it," }
-		ids = ids.substring(0, ids.size()-1);
-
-		//print ids;
-
-		post2GcmService.processarDados(mensagemInstance, ids.toString())
 
 		flash.message = "Mensagem Enviada"
-
 		redirect(action: "show", id: mensagemInstance.id)
-	}
-
-	def criarGcm(){
-		println params.toString()
-
-		def gcmClass = Gcm.findByNome("GCMKYES")
-		println "Entrei no givegcm $gcmClass"
-		if(!gcmClass){
-			Gcm.withTransaction{ status ->
-				gcmClass = new Gcm()
-				gcmClass.addRegId(params.RegId)
-				gcmClass.save(flush:true)
-				println "List: ${gcmclass.registration_ids}"
-				render([ok:"ok"]);
-			}
-		}
-		render([ok:"ok"])
 	}
 
 
