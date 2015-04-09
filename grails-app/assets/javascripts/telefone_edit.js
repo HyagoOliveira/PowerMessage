@@ -1,5 +1,11 @@
-jQuery(function(){	
+var divPhone;
+
+$(function(){	
 	applyMask();
+	divPhone = $("#phonediv").clone();
+	var size = $('#telefonesTable').children().length;
+	if(size > 2)
+		$('.red').removeClass('disabled');
 });
 
 function applyMask() {
@@ -8,25 +14,28 @@ function applyMask() {
 }
 
 function addPhone(){
-	var row;
-	row = "<div id='phone' class='fieldcontain'>";
-	row += "<label for='telefone'>Telefone </label>";
-	row += "<div class='ui input'>";
-	row += "<input class='ddd' name='ddd' size='2' required=''/>";
-	row += "</div>";
-	row += "<div class='ui input'>";
-	row += "<input class='phone' name='numero' required=''/>";
-	row += "</div>";
-	row += "<div style='margin-left:5px;' class='tiny red labeled ui button' onclick='removePhone(this)'>";
-	row += "<i class='icon minus'></i>";
-	row += "</div>";
-	row += "</div>";
-	$("#telefonesTable").append(row);
+	var size = $('#telefonesTable').children().length;
+
+	if(size == 2)
+		$('.red').removeClass('disabled');
+	
+	divPhone.children().each(function (index, value) {
+		if ($(value).prop("id") == "numero")
+			$(value).val("");
+			$(value).removeClass('disabled')
+	});
+	$("#telefonesTable").append($(divPhone).clone());
 	applyMask();
+	
 }
 
 function removePhone(valor){
+	
 	var size = $('#telefonesTable').children().length;
-	if(size > 1)
+
+	if(size > 2)
 		$(valor).parent().remove();
+	if(size == 3)
+		$('.red').addClass('disabled');
+	
 }

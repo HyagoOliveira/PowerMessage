@@ -10,7 +10,7 @@
 		</label>
 	</h4>
 	<div class="ui input field">
-		<g:textField name="nome" required="" size="29" value="${pessoaInstance?.nome}"/>
+		<g:textField name="nome" required="" size="29" value="${pessoaInstance?.nome}" placeholder="Insira o nome do contato"/>
 	</div>
 </div>
 

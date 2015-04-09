@@ -32,23 +32,20 @@ class AssociacaoController {
 		associacaoInstance.accountLocked=false
 		associacaoInstance.passwordExpired=false
 		
-		Permissao administradorPermissao = Permissao.findByAuthority("ROLE_ADMIN")
-		if(administradorPermissao == null){
-			administradorPermissao = new Permissao(authority: "ROLE_ADMIN").save(flush:true)
-		}	
-		
 		
         if (!associacaoInstance.save(flush: true)) {
             render(view: "create", model: [associacaoInstance: associacaoInstance])
             return
         }
+
+        new UsuarioPermissao(usuario: associacaoInstance,
+                permissao: Permissao.findByAuthority("ROLE_ASSOCIACAO")).save(flush:true)
+
 		
-		if(UsuarioPermissao.findByUsuarioAndPermissao(associacaoInstance, administradorPermissao) == null){
-			new UsuarioPermissao(usuario: associacaoInstance, permissao: administradorPermissao).save(flush:true)
-		}
 		
-		
+
         flash.message = message(code: 'default.created.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.id])
+
         redirect(action: "show", id: associacaoInstance.id)
     }
 
@@ -122,12 +119,10 @@ class AssociacaoController {
             redirect(action: "list")
             return
         }
-		println "excluiu com prazerrr1"
-        try {println "excluiu com prazerrr2"
+        try {
             associacaoInstance.delete(flush: true)
             flash.message = message(code: 'default.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
 			 redirect(action: "list")
-			 println "excluiu com prazerrr4"
         }
         catch (DataIntegrityViolationException e) {
             flash.message = message(code: 'default.not.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])

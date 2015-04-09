@@ -22,6 +22,7 @@ grails.project.fork = [
 ]
 
 grails.project.dependency.resolver = "ivy" // or maven
+
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
