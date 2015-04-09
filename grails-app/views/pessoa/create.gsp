@@ -20,7 +20,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form action="save">
+			<g:form action="save"  class="ui form segment">
 				<g:render template="form"/>
 				<g:submitButton name="create" class="tiny ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 			</g:form>

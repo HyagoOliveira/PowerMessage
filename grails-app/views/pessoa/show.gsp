@@ -73,7 +73,7 @@
 						<g:message code="default.button.edit.label" default="Edit" />
 					</div>
 				</g:link>
-				<g:actionSubmit action="delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
+				<g:actionSubmit action="delete" value="delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >
 					<div class="tiny ui button">
 						<i class="icon trash"></i>
 						<g:message code="default.button.delete.label" default="Delete" />
