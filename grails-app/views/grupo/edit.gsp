@@ -61,7 +61,7 @@
 			</ul>
 			</g:hasErrors>
 			<br>
-			<g:form method="post" >
+			<g:form method="post"  class="ui form segment">
 				<g:hiddenField name="id" value="${grupoInstance?.id}" />
 				<g:hiddenField name="version" value="${grupoInstance?.version}" />
 <%--				<fieldset class="form">--%>
@@ -76,14 +76,7 @@
 				padding: 8px;
 				margin-left:3px;"></i>
 			<g:actionSubmit class="tiny labeled ui button" style="padding-left:28px;" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-			<i class="icon trash" style="position: absolute;
-				z-index: 1;
-				vertical-align: bottom;
-				opacity: 0.6 !important;
-				padding: 8px;
-				margin-left:3px;"></i>
-			<g:actionSubmit class="tiny labeled ui button" style="padding-left:28px;" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-<%--				</fieldset>--%>
+			
 			</g:form>
 		</div>
 	</body>

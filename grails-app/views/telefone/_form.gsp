@@ -24,11 +24,11 @@
 	</g:each>
 	
 	<g:if test="${pessoaInstance.telefones == null || pessoaInstance?.telefones?.size()==0}">
-		<div id="phonediv" class="fieldcontain ${hasErrors(bean: telefoneInstance, field: 'numero', 'error')} ">
-			<div class="ui input">
+		<div id="phonediv" class="two fields">
+			<div class="two wide field ui input">
 				<g:textField class="ddd" name='ddd' size="3" required="" placeholder="DDD"/>
 			</div>
-			<div class="ui input">
+			<div class="four wide field ui input">
 				<g:textField class="phone" name='numero' required="" placeholder="Telefone"/>
 			</div>
 			<button type="button" class="tiny red labeled ui button disabled" style="margin: 2px" onclick="removePhone(this);">

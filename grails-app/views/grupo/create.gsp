@@ -44,7 +44,7 @@
 			</div>
 		</g:link>
 		<br><br>
-		<g:form action="save"  class="ui form">
+		<g:form action="save"  class="ui form segment">
 			<g:render template="form" />
 			<br />
 			<i class="icon save" style="position: absolute;
