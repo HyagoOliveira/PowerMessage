@@ -7,6 +7,9 @@
 <html lang="en" class="no-js">
 <!--<![endif]-->
 <head>
+<link rel="icon" 
+      type="image/png" 
+      href="https://cdn3.iconfinder.com/data/icons/glypho-free/64/speech-bubble-dots-outline-20.png">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 

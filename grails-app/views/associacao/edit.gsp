@@ -30,13 +30,7 @@
 				<g:message code="Nova Associação" args="[entityName]" />
 			</div>
 		</g:link>
-		<g:hasErrors bean="${associacaoInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${associacaoInstance}" var="error">
-				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-				</g:eachError>
-			</ul>
-			</g:hasErrors>
+		
 		<br><br>
 			<g:form method="post"  class="ui form">
 				<g:hiddenField name="id" value="${associacaoInstance?.id}" />

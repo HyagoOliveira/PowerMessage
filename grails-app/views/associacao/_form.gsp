@@ -1,36 +1,76 @@
-<%@ page import="com.acception.powermessage.Associacao" %>
-<div class="ui attached message" hidden="true">
-  <div class="header">
-    Welcome to our site!
-  </div>
-  <p>Fill out the form below to sign-up for a new account</p>
-</div>
+<%@ page import="com.acception.powermessage.Associacao"%>
+
+<script type="text/javascript">
+function validaSenha (input){ 
+    if (input.value != document.getElementById('password').value) {
+    input.setCustomValidity('As senhas inseridas devem ser as mesmas.');
+  } else {
+    input.setCustomValidity('');
+  }
+} 
+</script>
+
+<g:hasErrors bean="${associacaoInstance}">
+	<div class="ui negative message">
+		
+		<div class="header"><i class="warning sign icon"></i>Houveram alguns erros com o seu cadastro</div>
+		<ul class="list" role="alert">
+			<g:eachError bean="${associacaoInstance}" var="error">
+				<li
+					<g:if test="${error in org.springframework.validation.FieldError}"> data-field-id="${error.field}"</g:if>><g:message
+						error="${error}" /></li>
+			</g:eachError>
+		</ul>
+	</div>
+</g:hasErrors>
+
+
+
+
 <h4 class="ui dividing header">Informações Básicas</h4>
 <div class="two fields">
-    <div class="required field ">     
-      <label> Nome</label>
-      <input placeholder="Nome" type="text"  name="nome" value="${associacaoInstance?.nome}">
-    </div>
-    <div class="required field">
-      <label>E-mail</label>
-      <input name="email" placeholder="E-mail" type="text" value="${associacaoInstance?.email}">
-    </div>
+	<div class="required field">
+		<label> Nome</label>
+		<div class="ui input field">
+			<g:textField name="nome" required=""
+				value="${associacaoInstance?.nome}" />
+		</div>
+	</div>
+	<div class="required field">
+		<label>E-mail</label>
+		<div class="ui input field">
+			<g:textField name="email" required=""
+				value="${associacaoInstance?.email}" />
+		</div>
+	</div>
 </div>
 <g:render template="/endereco/form"></g:render>
 <h4 class="ui dividing header">Informações de Login</h4>
+
+<div class="ten wide required field">
+	<label>Nome de Usuário</label>
+	<div class="ui icon input">
+		<g:textField name="username" required=""
+			value="${associacaoInstance?.username}" />
+		<i class="user icon"></i>
+	</div>
+</div>
+
+<br>
 <div class="two fields">
-    <div class="required field">
-      <label>Nome de Usuário</label>
-      <div class="ui icon input">
-        <input type="text" placeholder="Username" value="${associacaoInstance?.username}" name="username">
-        <i class="user icon"></i>
-      </div>
-    </div>
-    <div class="required field">
-      <label>Senha</label>
-      <div class="ui icon input">
-        <input name="password"  type="password" value="">
-        <i class="lock icon"></i>
-      </div>
-    </div>
-  </div>
+	<div class="five wide required field">
+		<label>Senha</label>
+		<div class="ui icon input">
+			<g:passwordField id="password" name="password" required="" value="" />
+			<i class="lock icon"></i>
+		</div>
+	</div>
+	<div class="five  wide required field">
+		<label>Repetir Senha</label>
+		<div class="ui icon input">
+			<g:passwordField id= "rptpassword" name="rptpassword" required="" value=""  oninput="validaSenha(this)"/>
+			<i class="lock icon"></i>
+		</div>
+	</div>
+</div>
+

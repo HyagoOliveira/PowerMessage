@@ -48,14 +48,14 @@ class AssociacaoController {
 		}
 		
 		
-        flash.message = message(code: 'default.created.message', args: [message(code: 'associacao.label', default: 'Associacao'), associacaoInstance.id])
+        flash.message = message(code: 'default.created.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.id])
         redirect(action: "show", id: associacaoInstance.id)
     }
 
     def show(Long id) {
         def associacaoInstance = Associacao.get(id)
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'associacao.label', default: 'Associacao'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
             redirect(action: "list")
             return
         }
@@ -66,7 +66,7 @@ class AssociacaoController {
     def edit(Long id) {
         def associacaoInstance = Associacao.get(id)
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'associacao.label', default: 'Associacao'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
             redirect(action: "list")
             return
         }
@@ -81,12 +81,11 @@ class AssociacaoController {
             redirect(action: "list")
             return
         }
-		println springSecurityService.encodePassword(params.password)
-		println associacaoInstance.password
+		
 		if (!springSecurityService.encodePassword(params.password).equals(associacaoInstance.password)){		
 			associacaoInstance.errors.rejectValue(null, null,
 				null,
-				"A senha não está correta. Digite a senha certa e tente novamente.")
+				"A senha inserida não está correta. Digite a senha correta e tente novamente.")
 		  render(view: "edit", model: [associacaoInstance: associacaoInstance])
 		  return
 		}
@@ -108,28 +107,30 @@ class AssociacaoController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'associacao.label', default: 'Associacao'), associacaoInstance.id])
+        flash.message = message(code: 'default.updated.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.id])
         redirect(action: "show", id: associacaoInstance.id)
     }
 
     def delete(Long id) {
+		
         def associacaoInstance = Associacao.get(id)		
 		UsuarioPermissao usuarioPermissao = UsuarioPermissao.findByUsuario(associacaoInstance)
 		usuarioPermissao.delete(flush: true)
 		
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'associacao.label', default: 'Associacao'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
             redirect(action: "list")
             return
         }
-
-        try {
+		println "excluiu com prazerrr1"
+        try {println "excluiu com prazerrr2"
             associacaoInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'associacao.label', default: 'Associacao'), id])
-            redirect(action: "list")
+            flash.message = message(code: 'default.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
+			 redirect(action: "list")
+			 println "excluiu com prazerrr4"
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'associacao.label', default: 'Associacao'), id])
+            flash.message = message(code: 'default.not.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
             redirect(action: "show", id: id)
         }
     }

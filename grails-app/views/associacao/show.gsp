@@ -7,6 +7,8 @@
 <g:set var="entityName"
 	value="${message(code: 'associacao.label', default: 'Associação')}" />
 <title><g:message code="default.show.label" args="[entityName]" /></title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 </head>
 <body>
 	<div id="show-associacao" class="content scaffold-show" role="main">
@@ -14,7 +16,7 @@
 			<g:message code="Ver Associação" args="[entityName]" />
 		</h1>
 		<g:if test="${flash.message}">
-			<div class="message" role="status">
+			<div class="ui info message" role="status">
 				${flash.message}
 			</div>
 		</g:if>
@@ -68,7 +70,7 @@
 
 		</table>
 
-		<g:form class ="ui form">
+		<g:form class="ui form">
 			<g:hiddenField name="id" value="${associacaoInstance?.id}" />
 			<g:link action="edit" id="${associacaoInstance?.id}">
 				<div class="tiny labeled ui button">
@@ -76,9 +78,12 @@
 					<g:message code="default.button.edit.label" default="Edit" />
 				</div>
 			</g:link>
-			<g:actionSubmit
-				class="tiny labeled ui button" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>
-			</g:form> 
-			</div>
+			<g:actionSubmit class="remove tiny labeled ui button" action="delete"
+				value="${message(code: 'default.button.delete.label', default: 'Delete')}" 
+				onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');"/>				
+		</g:form>
+	</div>
+
+
 </body>
 </html>
