@@ -11,3 +11,5 @@ RemoteSystemsTempFiles/
 bin
 /target/
 *.iml
+*.idea
+target

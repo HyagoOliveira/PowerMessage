@@ -11,8 +11,6 @@ class SmsService {
     static String KHIPU_URI = "http://192.168.1.140:6543"
 
     def send(Mensagem sms, def contatosIds) {
-        println("IDS DOS CONTATOS $contatosIds")
-
         sms.msgStatus = MsgStatus.ENVIANDO
         sms.tentativas = new Integer(1)
         sms.dataEnvio = new Date()
@@ -22,15 +20,17 @@ class SmsService {
 			return
 		}
 
-        def contatos = construirMapContatos(getContatoIntances(contatosIds))
+        def contatosIntance = Pessoa.getAll(contatosIds)
 
-        println("SMS sendo enviado para ${contatos}")
+        println("SMS sendo enviado para ${contatosIntance}")
+        def contatosmap = buildMapContatos(contatosIntance)
+        sms.pessoas = contatosIntance
 
         def map = [
                 data:[
                         id_projeto: PROJETO_ID,
                         id_mensagem: sms.id,
-                        contatos: contatos,
+                        contatos: contatosmap,
                         sms_texto: sms.texto
                 ]
         ]
@@ -69,16 +69,7 @@ class SmsService {
         return msg
     }
 
-    private def getContatoIntances(def idList){
-        def pessoas = []
-
-        idList.each{id ->
-            pessoas += Pessoa.get(id)
-        }
-        return pessoas
-    }
-
-    private def construirMapContatos(def contatos){
+    private def buildMapContatos(def contatos){
         def listcontatos = []
         contatos.each{p ->
             listcontatos += [nome: p.nome, telefones: p.telefones]

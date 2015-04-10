@@ -8,7 +8,7 @@ class Mensagem {
 	Integer tentativas
 	MsgStatus msgStatus
 
-	static hasMany = [grupos: Grupo, pessoas: Pessoa]	
+	static hasMany = [grupos: Grupo, pessoas: Pessoa]
 	static belongsTo = [Associacao, Pessoa, Grupo]
 	
     static constraints = {
@@ -17,4 +17,5 @@ class Mensagem {
 		msgStatus nullable:true
 		tentativas nullable:true
     }
+
 }
