@@ -21,7 +21,7 @@ environments {
 		if (!devPass) devPass="postgres";
 
 		dataSource {
-			dbCreate = "create" // one of 'create', 'create-drop', 'update', 'validate', ''
+			dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
 			url = devUrl;
 			password = devPass;
 		}
