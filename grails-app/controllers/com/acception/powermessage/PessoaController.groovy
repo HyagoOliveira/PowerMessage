@@ -40,7 +40,7 @@ class PessoaController {
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
         redirect(action: "show", id: pessoaInstance.id)
     }
 

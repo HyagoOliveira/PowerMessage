@@ -28,7 +28,7 @@
 				<g:if test="${mensagemInstance?.dataEnvio}">
 					<tr>
 						<td>
-							<span id="dataEnvio-label" class="property-label"><g:message code="mensagem.dataEnvio.label" default="Data de Envio" /></span>
+							<span id="dataEnvio-label" class="property-label"><g:message code="mensagem.dataEnvio.label" default="Enviada em" /></span>
 						</td>
 						<td>
 							<span class="property-value" aria-labelledby="dataEnvio-label">
@@ -42,7 +42,7 @@
 				<g:if test="${mensagemInstance?.msgStatus}">
 					<tr>
 						<td>
-							<span id="msgStatus-label" class="property-label"><g:message code="mensagem.msgStatus.label" default="Msg Status" /></span>
+							<span id="msgStatus-label" class="property-label"><g:message code="mensagem.msgStatus.label" default="Status" /></span>
 						</td>
 						<td>
 							<span class="property-value" aria-labelledby="msgStatus-label"><g:fieldValue bean="${mensagemInstance}" field="msgStatus"/></span>

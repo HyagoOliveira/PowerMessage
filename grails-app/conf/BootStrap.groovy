@@ -25,6 +25,7 @@ class BootStrap {
 	}
 	
 	def loadEssencialData(){
+		fixtureLoader.load("roles")
 		fixtureLoader.load("estados")
 		fixtureLoader.load("cidades_p")
 		fixtureLoader.load("security")

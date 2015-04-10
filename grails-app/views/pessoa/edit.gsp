@@ -33,17 +33,18 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form class="ui form" method="post" >
+			<g:form  class="ui form segment" method="post" >
 				<g:hiddenField name="id" value="${pessoaInstance?.id}" />
 				<g:hiddenField name="version" value="${pessoaInstance?.version}" />
 				<g:render template="form"/>
-				<g:actionSubmit value="Alterar" action="update" class="tiny labeled ui button"/>
-				<g:link action="delete">
-					<div class="tiny labeled ui button">
-						<i class="icon trash"></i>
-						<g:message code="default.button.delete.label" args="Delete" />
-					</div>
-				</g:link>
+				<i class="icon save" style="position: absolute;
+				z-index: 1;
+				vertical-align: bottom;
+				opacity: 0.6 !important;
+				padding: 8px;
+				margin-left:3px;"></i>
+				<g:actionSubmit value="Alterar" style="padding-left:28px;"  action="update" class="tiny labeled ui button"/>
+				
 			</g:form>
 		</div>
 	</body>

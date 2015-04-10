@@ -21,7 +21,8 @@ grails.project.fork = [
     console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
 ]
 
-grails.project.dependency.resolver = "maven" // or ivy
+grails.project.dependency.resolver = "ivy" // or maven
+
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
@@ -80,5 +81,7 @@ grails.project.dependency.resolution = {
 		
 		compile ":console:1.5.4"
 		compile ":fixtures:1.3"
+
+        compile ":rest:0.8"
     }
 }

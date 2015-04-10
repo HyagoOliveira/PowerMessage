@@ -1,65 +1,93 @@
 
-<%@ page import="com.acception.powermessage.Associacao" %>
+<%@ page import="com.acception.powermessage.Associacao"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'associacao.label', default: 'Associacao')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#show-associacao" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="list" action="list"><g:message code="Associação Listagem" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="Nova Associação" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
-		<div id="show-associacao" class="content scaffold-show" role="main">
-			<h1><g:message code="Ver Associação" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+<head>
+<meta name="layout" content="main">
+<g:set var="entityName"
+	value="${message(code: 'associacao.label', default: 'Associação')}" />
+<title><g:message code="default.show.label" args="[entityName]" /></title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+</head>
+<body>
+	<div id="show-associacao" class="content scaffold-show" role="main">
+		<h1>
+			<g:message code="Ver Associação" args="[entityName]" />
+		</h1>
+		<g:if test="${flash.message}">
+			<div class="ui info message" role="status">
+				${flash.message}
+			</div>
+		</g:if>
+
+		<g:link action="list">
+			<div class="tiny labeled ui button">
+				<i class="icon list"></i>
+				<g:message code="Associação Listagem" args="[entityName]" />
+			</div>
+		</g:link>
+		<g:link action="create">
+			<div class="tiny labeled ui button">
+				<i class="icon building"></i>
+				<g:message code="Nova Associação" args="[entityName]" />
+			</div>
+		</g:link>
+		<table class="ui table">
+			<g:if test="${associacaoInstance?.nome}">
+				<tr>
+					<td><span id="nome-label" class="property-label"><g:message
+								code="associacao.nome.label" default="Nome" /></span>:</td>
+					<td><span class="property-value" aria-labelledby="nome-label"><g:fieldValue
+								bean="${associacaoInstance}" field="nome" /></span></td>
+				</tr>
 			</g:if>
-			<ol class="property-list associacao">			
-			
-				<g:if test="${associacaoInstance?.nome}">
-				<li class="fieldcontain">
-					<span id="nome-label" class="property-label"><g:message code="associacao.nome.label" default="Nome" /></span>
-					<span class="property-value" aria-labelledby="nome-label"><g:fieldValue bean="${associacaoInstance}" field="nome"/></span>
-				</li>
-				</g:if>
-			
-				<g:if test="${associacaoInstance?.email}">
-				<li class="fieldcontain">
-					<span id="email-label" class="property-label"><g:message code="associacao.email.label" default="Email" /></span>
-					
-						<span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${associacaoInstance}" field="email"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${associacaoInstance?.username}">
-				<li class="fieldcontain">
-					<span id="username-label" class="property-label"><g:message code="associacao.username.label" default="Nome de Usuário" /></span>
-					
-						<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${associacaoInstance}" field="username"/></span>
-					
-				</li>
-				</g:if>
-				<g:if test="${associacaoInstance?.endereco}">
-					<g:render template="/endereco/show" bean="${associacaoInstance?.endereco}" var="enderecoInstance"  ></g:render>
-				</g:if>
-			
-				
-			
-			</ol>
-			<g:form>
-				<fieldset class="buttons">
-					<g:hiddenField name="id" value="${associacaoInstance?.id}" />
-					<g:link class="edit" action="edit" id="${associacaoInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
-		</div>
-	</body>
+			<g:if test="${associacaoInstance?.email}">
+				<tr>
+					<td><span id="email-label" class="property-label"><g:message
+								code="associacao.email.label" default="E-mail" /></span>:</td>
+					<td><span class="property-value" aria-labelledby="email-label"><g:fieldValue
+								bean="${associacaoInstance}" field="email" /></span></td>
+				</tr>
+			</g:if>
+			<g:if test="${associacaoInstance?.email}">
+				<tr>
+					<td><span id="username-label" class="property-label"><g:message
+								code="associacao.username.label" default="Nome de Usuário" /></span>:</td>
+					<td><span class="property-value"
+						aria-labelledby="username-label"><g:fieldValue
+								bean="${associacaoInstance}" field="username" /></span></td>
+				</tr>
+			</g:if>
+			<g:if test="${associacaoInstance?.endereco}">
+				<tr>
+					<td><span id="endereco-label" class="property-label"><g:message
+								code="associacao.endereco.label" default="Endereço" /></span>:</td>
+					<td><g:render template="/endereco/show"
+							bean="${associacaoInstance?.endereco}" var="enderecoInstance"></g:render></td>
+				</tr>
+			</g:if>
+
+		</table>
+
+		<g:form class="ui form">
+			<g:hiddenField name="id" value="${associacaoInstance?.id}" />
+			<g:link action="edit" id="${associacaoInstance?.id}">
+				<div class="tiny labeled ui button">
+					<i class="icon pencil"></i>
+					<g:message code="default.button.edit.label" default="Edit" />
+				</div>
+			</g:link>
+			<i class="icon trash" style="position: absolute;
+				z-index: 1;
+				vertical-align: bottom;
+				opacity: 0.6 !important;
+				padding: 8px;
+				margin-left:3px;"></i>
+				<g:actionSubmit class="tiny ui button" style="padding-left:28px;" action="delete" code="default.button.delete.label" value="Remover" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+		</g:form>
+	</div>
+
+
+</body>
 </html>

@@ -7,6 +7,9 @@
 <html lang="en" class="no-js">
 <!--<![endif]-->
 <head>
+<link rel="icon" 
+      type="image/png" 
+      href="https://cdn3.iconfinder.com/data/icons/glypho-free/64/speech-bubble-dots-outline-20.png">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -32,7 +35,7 @@
 				<a class="item" href="${createLink(uri: '/' )}" class="item">
 					<i class="home icon"></i>Home
 				</a>
-				<sec:ifAnyGranted roles="ROLE_ADMIN">
+				<sec:ifAnyGranted roles="ROLE_ASSOCIACAO">
 					<g:link controller="mensagem" action="create" class="item">
 						<i class="mail icon"></i> Enviar Mensagem
 					</g:link>
@@ -47,14 +50,14 @@
 					</g:link>
 				</sec:ifAnyGranted>
 
-				<sec:ifAnyGranted roles="ROLE_SUPER_ADMIN">
+				<sec:ifAnyGranted roles="ROLE_ADMIN">
 					<g:link controller="associacao" action="index" class="item">
 						<i class="building icon"></i>Associação
 					</g:link>
 				</sec:ifAnyGranted>
 
 				<sec:ifLoggedIn>
-					<g:link controller="logout" class="ui item right">Logout</g:link>
+					<g:link controller="logout" class="ui item right">Logout <i class="sign out icon"></i></g:link>
 				</sec:ifLoggedIn>
 		</div>
 	</sec:ifLoggedIn>

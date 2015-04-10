@@ -29,18 +29,30 @@
 		</script>
 	</head>
 	<body>
-		<a href="#edit-grupo" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			</ul>
-		</div>
 		<div id="edit-grupo" class="content scaffold-edit" role="main">
-			<h1><g:message code="default.edit.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
+			<h1>
+			<g:message code="Ver Grupo" args="[entityName]" />
+		</h1>
+		
+		<g:if test="${flash.message}">
+			<div class="ui info message" role="status">
+				${flash.message}
+			</div>
+		</g:if>
+
+		<g:link action="list">
+			<div class="tiny labeled ui button">
+				<i class="icon list"></i>
+				<g:message code="Grupo Listagem" args="[entityName]" />
+			</div>
+		</g:link>
+		<g:link action="create">
+			<div class="tiny labeled ui button">
+				<i class="icon building"></i>
+				<g:message code="Novo Grupo" args="[entityName]" />
+			</div>
+		</g:link>
+		<br>
 			<g:hasErrors bean="${grupoInstance}">
 			<ul class="errors" role="alert">
 				<g:eachError bean="${grupoInstance}" var="error">
@@ -48,16 +60,23 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form method="post" >
+			<br>
+			<g:form method="post"  class="ui form segment">
 				<g:hiddenField name="id" value="${grupoInstance?.id}" />
 				<g:hiddenField name="version" value="${grupoInstance?.version}" />
-				<fieldset class="form">
+<%--				<fieldset class="form">--%>
 					<g:render template="form"/>
-				</fieldset>
-				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
+<%--				</fieldset>--%>
+<%--				<fieldset class="buttons">--%>
+<br>
+<i class="icon save" style="position: absolute;
+				z-index: 1;
+				vertical-align: bottom;
+				opacity: 0.6 !important;
+				padding: 8px;
+				margin-left:3px;"></i>
+			<g:actionSubmit class="tiny labeled ui button" style="padding-left:28px;" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+			
 			</g:form>
 		</div>
 	</body>
