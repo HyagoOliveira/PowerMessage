@@ -100,12 +100,6 @@
 						<g:message code="Encaminhar" default="Encaminhar" />
 					</div>
 				</a>
-				<g:link action="delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-					<div class="tiny labeled ui button">
-						<i class="icon trash"></i>
-						<g:message code="default.button.delete.label" default="Delete" />
-					</div>
-				</g:link>
 			</g:form>
 		</div>
 	</body>
