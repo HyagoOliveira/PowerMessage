@@ -1,8 +1,7 @@
 package com.acception.powermessage
 
-import com.acception.gcm.Gcm
+
 import com.acception.usuario.Pessoa
-import com.acception.powermessage.SmsService
 
 class MensagemController {
 
@@ -35,8 +34,6 @@ class MensagemController {
 		switch (params.myGroup){
 
 			case 'tabelaContatos':
-				println("via contatos selecionado")
-				println("PARAMS: $params")
 
 				if(!params.contatos){
 					flash.message = "Você deve selecionar pelo menos um contato."
@@ -49,7 +46,6 @@ class MensagemController {
 				break
 
 			case 'tabelaGrupos':
-				println("via grupos selecionado")
 
 				if(!params.grupos ){
 					flash.message = "Você deve selecionar pelo menos um grupo."
@@ -58,7 +54,9 @@ class MensagemController {
 				}
 
 				flash.message = "Enviando Mensagem..."
-				smsService.send(mensagemInstance, Grupo.get(params.grupos).pessoas*.id)
+				def grupos = Grupo.getAll(params.grupos)
+				mensagemInstance.grupos = grupos
+				smsService.send(mensagemInstance, grupos.pessoas*.id)
 				break
 		}
 

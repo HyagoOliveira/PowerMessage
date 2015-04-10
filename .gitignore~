@@ -10,3 +10,5 @@ RemoteSystemsTempFiles/
 .classpath
 bin
 /target/
+*.iml
+*.idea
