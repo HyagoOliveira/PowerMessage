@@ -6,6 +6,7 @@ import com.acception.usuario.Pessoa
 class MensagemController {
 
 	def smsService;
+	def springSecurityService
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -15,7 +16,9 @@ class MensagemController {
 
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
-		[mensagemInstanceList: Mensagem.list(params), mensagemInstanceTotal: Mensagem.count()]
+		def mensagens = springSecurityService.currentUser.mensagens
+		println "MENSAGENS DA ASSOCIACAO LOGADA: ${mensagens}"
+		[mensagemInstanceList: mensagens, mensagemInstanceTotal: mensagens.size()]
 	}
 
 	def create() {
@@ -60,8 +63,8 @@ class MensagemController {
 				break
 		}
 
-
-		flash.message = "Mensagem Enviada"
+		springSecurityService.currentUser.addToMensagens(mensagemInstance)
+		flash.message = smsService.khipuAnswer
 		redirect(action: "show", id: mensagemInstance.id)
 	}
 
@@ -131,21 +134,7 @@ class MensagemController {
 	}
 
 	def delete(Long id) {
-		def mensagemInstance = Mensagem.get(id)
-		mensagemInstance.flag = "false"
-
-		mensagemInstance.save(flush: true)
-
+		flash.message = "Mensagens não podem ser deletadas!"
 		redirect(action: "list")
-	}
-	
-	def grupoChangeSelection = {
-		Grupo g = Grupo.get(params.id);
-		
-//		println "Grupo selecionado: $g.nome"
-//		
-//		(g?.pessoas*.id).each { pessoaId ->
-//			println "\tPessoas selecionadas: ${Pessoa.get(pessoaId).nome}"
-//		}
 	}
 }

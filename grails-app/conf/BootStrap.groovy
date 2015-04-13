@@ -32,5 +32,6 @@ class BootStrap {
 		fixtureLoader.load("associacao_teste")
 		fixtureLoader.load("contatos_teste")
 		fixtureLoader.load("grupo_teste")
+		fixtureLoader.load("finish_fixtures")
 	}
 }
