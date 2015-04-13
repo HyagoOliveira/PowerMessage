@@ -8,10 +8,10 @@ class ConfiguracaoController {
     }
 
     def show(){
-        def configuracaoInstance = ConfiguracaoSistema.getAll()
+        def configuracaoInstance = ConfiguracaoSistema.getInstance()
 
         if (!configuracaoInstance) {
-            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label')])
             redirect(action: "list")
             return
         }
@@ -19,13 +19,12 @@ class ConfiguracaoController {
         [configuracaoInstance: configuracaoInstance]
     }
 
-    def edit(Long id){
-        def configuracaoInstance = ConfiguracaoSistema.get(id)
+    def edit(){
+        def configuracaoInstance = ConfiguracaoSistema.getInstance()
 
-        println("ID: $id")
 
         if (!configuracaoInstance) {
-            flash.message = essage(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label')])
             redirect(action: "list")
             return
         }
@@ -33,13 +32,12 @@ class ConfiguracaoController {
         [configuracaoInstance: configuracaoInstance]
     }
 
-    def update(Long id, Long version) {
-        def configuracaoInstance = ConfiguracaoSistema.get(id)
+    def update(Long version) {
+        def configuracaoInstance = ConfiguracaoSistema.getInstance()
         if (!configuracaoInstance) {
             flash.message = message(code: 'default.not.found.message.female', args: [
-                    message(code: 'configuracaoSistema.label'), id
-            ])
-            redirect(action: "list")
+                    message(code: 'configuracaoSistema.label')])
+            redirect(action: "show")
             return
         }
 
@@ -56,34 +54,35 @@ class ConfiguracaoController {
 
         configuracaoInstance.properties = params
 
+
         if (!configuracaoInstance.save(flush: true)) {
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label')])
             render(view: "edit", model: [configuracaoInstance: configuracaoInstance])
             return
         }
 
-        flash.message = message(code: 'default.updated.message.female', args: [
-                message(code: 'configuracaoSistema.label'),
-                configuracaoInstance.id
-        ])
-        redirect(action: "show", id: configuracaoInstance.id)
+        flash.message = message(code: 'default.updated.message.female',
+                default: "Configuração {0} atualizada com sucesso!",
+                args: [message(code: 'configuracaoSistema.label')])
+        redirect(action: "show")
     }
 
-    def delete(Long id) {
-        def configuracaoInstance = ConfiguracaoSistema.get(id)
-        if (!configuracaoInstance) {
-            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label'), id])
-            redirect(action: "list")
-            return
-        }
-
-        try {
-            configuracaoInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message.female', args: [message(code: 'configuracaoSistema.label'), id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message.female', args: [message(code: 'configuracaoSistema.label'), id])
-            redirect(action: "show", id: id)
-        }
-    }
+//    def delete(Long id) {
+//        def configuracaoInstance = ConfiguracaoSistema.get(id)
+//        if (!configuracaoInstance) {
+//            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'configuracaoSistema.label'), id])
+//            redirect(action: "list")
+//            return
+//        }
+//
+//        try {
+//            configuracaoInstance.delete(flush: true)
+//            flash.message = message(code: 'default.deleted.message.female', args: [message(code: 'configuracaoSistema.label'), id])
+//            redirect(action: "list")
+//        }
+//        catch (DataIntegrityViolationException e) {
+//            flash.message = message(code: 'default.not.deleted.message.female', args: [message(code: 'configuracaoSistema.label'), id])
+//            redirect(action: "show", id: id)
+//        }
+//    }
 }

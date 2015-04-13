@@ -20,7 +20,7 @@
         <div class="item">
             <div class="header">Sistema</div>
             <g:link action="show" class="subitem">
-                <i class="configure icon"></i> Configurar
+                <i class="configure icon"></i> Configuração Khipu
             </g:link>
         </div>
         <div class="item">
