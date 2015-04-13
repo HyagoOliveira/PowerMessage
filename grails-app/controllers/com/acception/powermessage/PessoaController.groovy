@@ -14,8 +14,12 @@ class PessoaController {
     }
 
     def list(Integer max) {
+        def alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         def pessoas = springSecurityService.currentUser.pessoas.findAll { it.ativo == true }
-        [pessoaInstanceList: pessoas.sort { it.nome }, pessoaInstanceTotal: pessoas.size()]
+        if (params.letra) {
+            pessoas = pessoas.findAll { it.nome.getAt(0) == params.letra }
+        }
+        [pessoaInstanceList: pessoas.sort { it.nome }, pessoaInstanceTotal: pessoas.size(), alfabeto: alfabeto]
     }
 
     def create() {		
