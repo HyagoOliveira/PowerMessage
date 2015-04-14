@@ -15,25 +15,23 @@
 	</g:if>
 	<table class="ui padded table">
 		<tbody>
-		<g:if test="${configuracaoInstance?.idProjeto}">
-			<tr>
-				<td>Id do Projeto</td>
-				<td>${configuracaoInstance.idProjeto[0][0..80]} .......</td>
-			</tr>
-		</g:if>
-
 		<g:if test="${configuracaoInstance?.khipuUrl}">
 			<tr>
 				<td>Url do Khipu</td>
-				<td>${configuracaoInstance.khipuUrl[0]}</td>
+				<td>${configuracaoInstance.khipuUrl}</td>
+			</tr>
+		</g:if>
+
+		<g:if test="${configuracaoInstance?.idProjeto}">
+			<tr>
+				<td>Id do Projeto</td>
+				<td>${configuracaoInstance.idProjeto[0..80]} .......</td>
 			</tr>
 		</g:if>
 		</tbody>
 	</table>
 
 	<g:form>
-		<g:hiddenField name="id" value="${configuracaoInstance?.id}" />
-
 		<div class="ui basic button">
 			<i class="edit icon"></i>
 			<g:link action="edit">Reconfigurar</g:link>

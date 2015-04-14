@@ -3,10 +3,10 @@ package com.acception.usuario
 import com.acception.powermessage.*
 
 class Pessoa {
-	String nome	
+	String nome
 	Boolean ativo = true;
 	
-	static belongsTo = [Associacao, Grupo]
+	static belongsTo = [Associacao,Grupo]
 	static hasMany = [grupos: Grupo, mensagens: Mensagem, telefones:Telefone]
 	
     static constraints = {

@@ -26,7 +26,21 @@
 			</div>
 		</g:if>
 		
+		<br/><br/>
+		<div class="ui buttons">
+			<g:link action="list" params="[letra: null]">
+				<div class="ui button" style="font-size: 0.64em">
+					<i class="ui icon refresh"></i>
+				</div>
+			</g:link>
+			<g:each in="${alfabeto}" var="letra">
+				<g:link action="list" params="[letra: letra]">
+					<div class="ui button" style="font-size: 0.64em">${letra}</div>
+				</g:link>
+			</g:each>
+		</div>
 		<g:if test="${pessoaInstanceTotal > 0}">
+
 			<table class="ui table">
 				<thead>
 					<tr>
