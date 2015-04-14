@@ -44,7 +44,10 @@
 									${fieldValue(bean: grupoInstance, field: "nome")}
 								</g:link></td>
 							<td>
-								${fieldValue(bean: grupoInstance, field: "pessoas")}
+							<g:each in="${grupoInstance.pessoas}" status="j" var="p">
+								<g:if test="${p.ativo == true}">${p.nome}<g:if test="${j == grupoInstance.pessoas.size() - 1}">.</g:if><g:else>,</g:else>
+    							</g:if>
+							</g:each>
 							</td>
 						</tr>
 					</g:each>
@@ -55,7 +58,9 @@
 			</div>
 		</g:if>
 		<g:else>
-			<div class="pagination">Não há grupos.</div>
+			<div class="ui negative message" role="status">
+				Não há grupos cadastrados.
+			</div>
 		</g:else>
 	</div>
 </body>
