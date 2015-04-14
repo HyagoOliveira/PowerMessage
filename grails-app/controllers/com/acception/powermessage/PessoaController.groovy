@@ -42,14 +42,17 @@ class PessoaController {
             return
         }
 
-        flash.message = "O contato ${pessoaInstance.nome} foi salvo com sucesso!"
+        flash.message = message(code: 'default.created.message', args: [
+			message(code: 'nome.label', default: 'Contato'),
+			pessoaInstance.nome
+		])
         redirect(action: "show", id: pessoaInstance.id)
     }
 
     def show(Long id) {
         def pessoaInstance = Pessoa.get(id)
         if (!pessoaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
             redirect(action: "list")
             return
         }
@@ -60,7 +63,7 @@ class PessoaController {
     def edit(Long id) {
         def pessoaInstance = Pessoa.get(id)
         if (!pessoaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
             redirect(action: "list")
             return
         }
@@ -72,7 +75,7 @@ class PessoaController {
         def pessoaInstance = Pessoa.get(id)
 		
         if (!pessoaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
             redirect(action: "list")
             return
         }
@@ -90,8 +93,8 @@ class PessoaController {
         if (version != null) {
             if (pessoaInstance.version > version) {
                 pessoaInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'pessoa.label', default: 'Pessoa')] as Object[],
-                          "Another user has updated this Pessoa while you were editing")
+                          [message(code: 'pessoa.label', default: 'Contato')] as Object[],
+                          "Another user has updated this Contato while you were editing")
                 render(view: "edit", model: [pessoaInstance: pessoaInstance])
                 return
             }
@@ -104,24 +107,34 @@ class PessoaController {
             return
         }
 
-        flash.message = "O contato ${pessoaInstance.nome} foi alterado com sucesso!"
+       
+		flash.message = message(code: 'default.updated.message', args: [
+			message(code: 'pessoa.label', default: 'Pessoa'),
+			pessoaInstance.nome
+		])
         redirect(action: "show", id: pessoaInstance.id)
     }
 
     def delete(Long id) {
         def pessoaInstance = Pessoa.get(id)
         if (!pessoaInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
             redirect(action: "list")
             return
         }
 
         try {
 			pessoaInstance.desativar()
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
+			for (grupo in pessoaInstance.grupos){
+				grupo.pessoas.remove(pessoaInstance)
+				if (grupo.pessoas.size() == 0){
+					springSecurityService.currentUser.grupos.remove(grupo)
+				}
+			}
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
             redirect(action: "list")
         } catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
             redirect(action: "show", id: id)
         }
     }

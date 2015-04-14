@@ -32,8 +32,8 @@
 				<thead>
 					<tr>
 						<g:sortableColumn property="nome"
-							title="${message(code: 'grupo.nome.label', default: 'Nome')}" />
-						<g:sortableColumn property="pessoas" title="Pessoas" />
+							title="${message(code: 'grupo.nome.label', default: 'Nome do Grupo')}" />
+						<g:sortableColumn property="pessoas" title="Contatos no Grupo" />
 					</tr>
 				</thead>
 				<tbody>
@@ -44,7 +44,10 @@
 									${fieldValue(bean: grupoInstance, field: "nome")}
 								</g:link></td>
 							<td>
-								${fieldValue(bean: grupoInstance, field: "pessoas")}
+								<g:each in="${grupoInstance.pessoas}" var="p" status="j">
+							<g:if test="${p.ativo}"><span class="property-value" aria-labelledby="pessoas-label">
+							<g:link controller="pessoa" action="show" id="${p?.id}">${p?.encodeAsHTML()}</g:link></span></g:if><g:if test="${(j != grupoInstance.pessoas.size() - 1) && p.ativo}">,</g:if> <g:elseif  test="${(j == grupoInstance.pessoas.size() - 1) && p.ativo}">.</g:elseif> 
+							</g:each>
 							</td>
 						</tr>
 					</g:each>
@@ -55,7 +58,9 @@
 			</div>
 		</g:if>
 		<g:else>
-			<div class="pagination">Não há grupos.</div>
+			<div class="ui warning message" role="status">
+				Não há grupos cadastrados.
+			</div>
 		</g:else>
 	</div>
 </body>

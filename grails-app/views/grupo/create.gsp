@@ -36,7 +36,9 @@
 	<h1>
 			<g:message code="default.create.label" args="[entityName]" />
 		</h1>
-		
+					<g:if test="${flash.message}">
+			<div class="ui info message" role="status">${flash.message}</div>
+			</g:if>
 		<g:link action="list">
 			<div class="tiny labeled ui button">
 				<i class="icon list"></i>
@@ -53,7 +55,7 @@
 				opacity: 0.6 !important;
 				padding: 8px;
 				margin-left:3px;"></i>
-			<g:submitButton name="create" action="create" name="create" style="padding-left:28px;" class="tiny labeled ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+			<g:submitButton name="create" action="create" name="create" style="padding-left:28px;" class="tiny labeled ui button" value="${message(code: 'default.button.create.label', default: 'Create')}" onclick="return funcao();" />
 			
 		</g:form>
 	</div>

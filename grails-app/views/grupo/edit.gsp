@@ -54,7 +54,7 @@
 		</g:link>
 		<br>
 			<g:hasErrors bean="${grupoInstance}">
-			<ul class="errors" role="alert">
+			<ul class="ui negative message" role="alert">
 				<g:eachError bean="${grupoInstance}" var="error">
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>

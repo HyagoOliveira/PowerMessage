@@ -9,6 +9,7 @@ class SmsService {
 
     def khipuAnswer = 'none'
 
+
     def send(Mensagem sms, def contatosIds) {
         sms.msgStatus = MsgStatus.ENVIANDO
         sms.tentativas = new Integer(1)
@@ -27,7 +28,7 @@ class SmsService {
 
         def map = [
                 data:[
-                        id_projeto: ConfiguracaoSistema.idProjeto,
+                        id_projeto: ConfiguracaoSistema.getInstance().idProjeto,
                         id_mensagem: sms.id,
                         contatos: contatosmap,
                         sms_texto: sms.texto
@@ -49,7 +50,7 @@ class SmsService {
     def getInformacao(def idsContatos){
         println("Getting informação....")
 
-        def dados = [mensagem_ids: idsContatos, id_projeto:ConfiguracaoSistema.idProjeto]
+        def dados = [mensagem_ids: idsContatos, id_projeto:ConfiguracaoSistema.getInstance().idProjeto]
         def msg=""
         withHttp(uri: KHIPU_URI){
             msg = get(path: '/informacao', query:[q:dados as JSON])
@@ -61,7 +62,7 @@ class SmsService {
 
     private def send_data_khipu(dados=null){
         def msg=""
-        withHttp(uri: ConfiguracaoSistema.khipuUrl){
+        withHttp(uri: ConfiguracaoSistema.getInstance().khipuUrl){
             msg = get(path: '/receiver', query:[q:dados as JSON])
             println "RESPOSTA: $msg"
         }

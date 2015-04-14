@@ -14,7 +14,7 @@
 		<g:message code="default.list.label" args="[entityName]" />
 	</h1>
 	<g:if test="${flash.message}">
-		<div class="message" role="status">
+		<div class="ui info message" role="status">
 			${flash.message}
 		</div>
 	</g:if>
@@ -66,9 +66,9 @@
 
 	</g:if>
 	<g:else>
-		<div class="pagination">
-			Não há messagens.
-		</div>
+	<div class="ui warning message" role="status">
+				Não há mensagens enviadas.
+			</div>
 	</g:else>
 </div>
 </body>

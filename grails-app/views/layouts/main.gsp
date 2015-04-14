@@ -4,7 +4,7 @@
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html lang="en" class="no-js">
+<html lang="pt-br" class="no-js">
 <!--<![endif]-->
 <head>
 <link rel="icon" 
@@ -27,10 +27,13 @@
 <asset:javascript src="semantic.min.js"/>
 <asset:stylesheet src="semantic.min.css"/>
 	<asset:javascript src="application.js"/>
+		<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<asset:javascript src="http://jquery-airport.googlecode.com/files/jquery.airport-1.1.source.js"/>
 <r:layoutResources />
 </head>
 <body style="max-width: 900px; margin: 0 auto">
-	<sec:ifLoggedIn>
+<sec:ifLoggedIn>
 		<div class="ui menu">
 				<a class="item" href="${createLink(uri: '/' )}" class="item">
 					<i class="home icon"></i>Home
@@ -73,5 +76,10 @@
 		<g:message code="spinner.alt" default="Loading&hellip;" />
 	</div>
 	<r:layoutResources />
+	<script>
+	$(document).ready(function(){
+		$('.powermessage').airport([ 'Power Message', 'Acception Tecnologia']);
+	});
+	</script>
 </body>
 </html>
