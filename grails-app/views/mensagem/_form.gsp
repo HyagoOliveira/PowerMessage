@@ -1,5 +1,7 @@
 
 <%@ page import="com.acception.powermessage.Mensagem"%>
+<%@ page import="com.acception.powermessage.Grupo"%>
+<%@ page import="com.acception.usuario.Pessoa"%>
 
 <script type="text/javascript">
 	function updatePessoasList(value) {
@@ -36,7 +38,7 @@
  	</div>
 </div>
 
-<g:if test="${com.acception.powermessage.Grupo.list()}">
+<g:if test="${listGrupos}">
 	<table id="tabelaGrupos" hidden="true" class="ui table">
 		<thead>
 			<tr>
@@ -49,7 +51,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<g:each in="${com.acception.powermessage.Grupo.list()}" status="i"
+			<g:each in="${listGrupos}" status="i"
 				var="grupoInstance">
 				
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
@@ -67,7 +69,7 @@
 		</tbody>
 	</table>
 </g:if>
-<g:if test="${com.acception.usuario.Pessoa.list()}">
+<g:if test="${listPessoas}">
 	<table id="tabelaContatos" class="ui table">
 		<thead>
 			<tr>
@@ -80,9 +82,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<g:each in="${com.acception.usuario.Pessoa.list()}" status="i"
+			<g:each in="${listPessoas}" status="i"
 				var="pessoaInstance">
-				
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					<td>
 					 	<g:checkBox name="contatos" class="ui checkbox" value="${pessoaInstance.id}" checked="false"  />
