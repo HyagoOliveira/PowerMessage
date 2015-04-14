@@ -59,7 +59,9 @@
 							<span id="telefone-label" class="property-label">Telefone</span> 
 						</td>
 						<td>
-							<span class="property-value" aria-labelledby="numero-label">${fieldValue(bean: pessoaInstance, field: "telefones")}</span>
+							<span class="property-value" aria-labelledby="numero-label">
+								<g:join in="${pessoaInstance?.telefones}" delimiter=", "/>
+							</span>
 						</td>
 					</tr>
 				</g:if>

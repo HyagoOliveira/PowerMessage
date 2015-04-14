@@ -44,10 +44,7 @@
 									${fieldValue(bean: grupoInstance, field: "nome")}
 								</g:link></td>
 							<td>
-							<g:each in="${grupoInstance.pessoas}" status="j" var="p">
-								<g:if test="${p.ativo == true}">${p.nome}<g:if test="${j == grupoInstance.pessoas.size() - 1}">.</g:if><g:else>,</g:else>
-    							</g:if>
-							</g:each>
+								<g:join in="${grupoInstance.pessoas}" delimiter=", "/>
 							</td>
 						</tr>
 					</g:each>
