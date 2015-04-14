@@ -3,7 +3,6 @@ package com.acception.powermessage
 import com.acception.usuario.Pessoa
 import grails.converters.JSON
 import grails.transaction.Transactional
-import com.acception.powermessage.Mensagem
 
 @Transactional
 class SmsService {

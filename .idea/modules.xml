@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PowerMessage.iml" filepath="$PROJECT_DIR$/PowerMessage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PowerMessage-grailsPlugins.iml" filepath="$PROJECT_DIR$/PowerMessage-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
