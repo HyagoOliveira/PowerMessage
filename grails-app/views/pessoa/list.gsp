@@ -59,7 +59,8 @@
 								</g:link></td>
 
 							<td>
-								${fieldValue(bean: pessoaInstance, field: "telefones")}
+								%{--${fieldValue(bean: pessoaInstance, field: "telefones")}--}%
+								<g:join in="${pessoaInstance?.telefones}" delimiter=", "/>
 							</td>
 						</tr>
 					</g:each>

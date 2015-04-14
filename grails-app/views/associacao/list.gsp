@@ -16,7 +16,7 @@
 		<g:link action="create">
 			<div class="tiny ui button">
 				<i class="icon building"></i>
-				<g:message code="default.new.label.noun.female" args="[entityName]" />
+				<g:message code="default.new.label.noun.female" default="Nova Associação" args="[entityName]" />
 			</div>
 		</g:link>
 <%--		<g:if test="${flash.message}">--%>

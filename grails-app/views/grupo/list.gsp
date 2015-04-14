@@ -44,7 +44,7 @@
 									${fieldValue(bean: grupoInstance, field: "nome")}
 								</g:link></td>
 							<td>
-								${fieldValue(bean: grupoInstance, field: "pessoas")}
+								<g:join in="${grupoInstance.pessoas}" delimiter=", "/>
 							</td>
 						</tr>
 					</g:each>
