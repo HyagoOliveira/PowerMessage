@@ -7,6 +7,7 @@ class Mensagem {
 	Date dataEnvio
 	Integer tentativas
 	MsgStatus msgStatus
+	Boolean ativo = true
 
 	static hasMany = [grupos: Grupo, pessoas: Pessoa]
 	static belongsTo = [Associacao, Pessoa, Grupo]
