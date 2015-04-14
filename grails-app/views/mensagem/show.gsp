@@ -113,6 +113,7 @@
 				margin-left:3px;"></i>
 			<g:actionSubmit class="tiny labeled ui button" style="padding-left:28px;" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				
+
 			</g:form>
 		</div>
 	</body>

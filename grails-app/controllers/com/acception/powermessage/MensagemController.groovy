@@ -5,7 +5,7 @@ import com.acception.usuario.Pessoa
 
 class MensagemController {
 	def springSecurityService
-	def smsService;
+	def smsService
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -81,8 +81,8 @@ class MensagemController {
 				break
 		}
 
-
-		flash.message = "Mensagem Enviada"
+		springSecurityService.currentUser.addToMensagens(mensagemInstance)
+		flash.message = smsService.khipuAnswer
 		redirect(action: "show", id: mensagemInstance.id)
 	}
 
@@ -158,15 +158,5 @@ class MensagemController {
 		mensagemInstance.save(flush: true)		
 		associacao.save(flush:true)
 		redirect(action: "list")
-	}
-	
-	def grupoChangeSelection = {
-		Grupo g = Grupo.get(params.id);
-		
-//		println "Grupo selecionado: $g.nome"
-//		
-//		(g?.pessoas*.id).each { pessoaId ->
-//			println "\tPessoas selecionadas: ${Pessoa.get(pessoaId).nome}"
-//		}
 	}
 }

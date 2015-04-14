@@ -54,6 +54,9 @@
 					<g:link controller="associacao" action="index" class="item">
 						<i class="building icon"></i>Associação
 					</g:link>
+					<g:link controller="configuracao" action="index" class="item">
+						<i class="configure icon"></i><g:message code="configuracaoSistema.label"></g:message>
+					</g:link>
 				</sec:ifAnyGranted>
 
 				<sec:ifLoggedIn>

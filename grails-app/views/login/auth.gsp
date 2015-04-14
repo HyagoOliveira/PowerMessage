@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta name='layout' content='main' />
-		<title><g:message code="springSecurity.login.title" /></title>
+		<title><g:message code="website.nome" /></title>
 		<asset:stylesheet href="auth.css"/>
 		<asset:stylesheet href="login.css"/>
 	</head>
