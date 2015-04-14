@@ -19,11 +19,11 @@
 				<g:message code="default.new.label.noun.female" default="Nova Associação" args="[entityName]" />
 			</div>
 		</g:link>
-<%--		<g:if test="${flash.message}">--%>
-<%--			<div class="ui info message" role="status">--%>
-<%--				${flash.message}--%>
-<%--			</div>--%>
-<%--		</g:if>--%>
+		<g:if test="${flash.message}">
+			<div class="ui info message" role="status">
+				${flash.message}
+			</div>
+		</g:if>
 		<g:if test="${associacaoInstanceTotal > 0}">
 			<table  class="ui table">
 				<thead>
@@ -64,8 +64,8 @@
 			</div>
 		</g:if>
 		<g:else>
-			<div class="pagination">
-				<h1>Não há Associações cadastradas.</h1>
+				<div class="ui warning message" role="status">
+				Não há Associações cadastrados.
 			</div>
 		</g:else>
 	</div>

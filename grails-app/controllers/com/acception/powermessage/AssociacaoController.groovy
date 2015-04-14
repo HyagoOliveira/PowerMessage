@@ -42,7 +42,7 @@ class AssociacaoController {
                 permissao: Permissao.findByAuthority("ROLE_ASSOCIACAO")).save(flush:true)	
 		
 
-        flash.message = message(code: 'default.created.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.id])
+        flash.message = message(code: 'default.created.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
 
         redirect(action: "show", id: associacaoInstance.id)
     }
@@ -50,7 +50,7 @@ class AssociacaoController {
     def show(Long id) {
         def associacaoInstance = Associacao.get(id)
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
             redirect(action: "list")
             return
         }
@@ -61,7 +61,7 @@ class AssociacaoController {
     def edit(Long id) {
         def associacaoInstance = Associacao.get(id)
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
             redirect(action: "list")
             return
         }
@@ -72,23 +72,15 @@ class AssociacaoController {
     def update(Long id, Long version) {
         def associacaoInstance = Associacao.get(id)
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'associacao.label', default: 'Associação'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
             redirect(action: "list")
             return
         }
 		
-//		if (!springSecurityService.encodePassword(params.password).equals(associacaoInstance.password)){		
-//			associacaoInstance.errors.rejectValue(null, null,
-//				null,
-//				"A senha inserida não está correta. Digite a senha correta e tente novamente.")
-//		  render(view: "edit", model: [associacaoInstance: associacaoInstance])
-//		  return
-//		}
-		
         if (version != null) {
             if (associacaoInstance.version > version) {
-                associacaoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'associacao.label', default: 'Associacao')] as Object[],
+                associacaoInstance.errors.rejectValue("version", "default.optimistic.locking.failure.female",
+                          [message(code: 'associacao.label', default: 'Associação')] as Object[],
                           "Another user has updated this Associacao while you were editing")
                 render(view: "edit", model: [associacaoInstance: associacaoInstance])
                 return
@@ -102,7 +94,7 @@ class AssociacaoController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.id])
+        flash.message = message(code: 'default.updated.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
         redirect(action: "show", id: associacaoInstance.id)
     }
 
@@ -113,17 +105,17 @@ class AssociacaoController {
 		usuarioPermissao.delete(flush: true)
 		
         if (!associacaoInstance) {
-            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
+            flash.message = message(code: 'default.not.found.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
             redirect(action: "list")
             return
         }
         try {
             associacaoInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
+            flash.message = message(code: 'default.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
 			 redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), id])
+            flash.message = message(code: 'default.not.deleted.message.female', args: [message(code: 'associacao.label', default: 'Associação'), associacaoInstance.nome])
             redirect(action: "show", id: id)
         }
     }

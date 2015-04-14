@@ -21,16 +21,15 @@
 		</g:link>
 		
 		<g:if test="${flash.message}">
-			<div class="message" role="status">
+			<div class="ui info message" role="status">
 				${flash.message}
 			</div>
 		</g:if>
 		
-		<br/><br/>
-		<div class="ui buttons">
+		<div class="ui buttons" style="padding-top:8px;">
 			<g:link action="list" params="[letra: null]">
-				<div class="ui button" style="font-size: 0.64em">
-					<i class="ui icon refresh"></i>
+				<div class="ui button" style="font-size: 0.64em; " data-content="Listar todos os contatos" data-variation="basic">
+					<i class="ui icon list layout" ></i>
 				</div>
 			</g:link>
 			<g:each in="${alfabeto}" var="letra">
@@ -71,8 +70,8 @@
 			</div>
 		</g:if>
 		<g:else>
-			<div class="pagination">
-				Não há Contatos cadastrados.
+			<div class="ui warning message" role="status">
+				Não há contatos cadastrados.
 			</div>
 		</g:else>
 	</div>

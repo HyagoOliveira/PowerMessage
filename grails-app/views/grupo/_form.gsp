@@ -30,7 +30,7 @@
 		<label for="pessoas">
 			Escolha os contatos para adicionar ao grupo
 		</label>
-	<g:if test="${com.acception.usuario.Pessoa.list()}">
+	<g:if test="${pessoasList}">
 		<table id="tabelaPessoas" class="ui table">
 			<thead>
 				<tr>
@@ -43,7 +43,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<g:each in="${com.acception.usuario.Pessoa.list()}" status="i"
+				<g:each in="${pessoasList}" status="i"
 					var="pessoaInstance">
 					
 						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">

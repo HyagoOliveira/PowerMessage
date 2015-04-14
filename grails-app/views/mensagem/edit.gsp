@@ -20,7 +20,7 @@
 			<div class="ui info message" role="status">${flash.message}</div>
 			</g:if>
 			<g:hasErrors bean="${mensagemInstance}">
-			<ul class="errors" role="alert">
+			<ul class="ui negative message" role="alert">
 				<g:eachError bean="${mensagemInstance}" var="error">
 				<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 				</g:eachError>

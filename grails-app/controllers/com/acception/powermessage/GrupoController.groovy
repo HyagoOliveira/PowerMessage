@@ -18,34 +18,46 @@ class GrupoController {
 	}
 
 	def create() {
-		[grupoInstance: new Grupo(params)]
+		 def pessoas = springSecurityService.currentUser.pessoas.findAll { it.ativo == true }		
+		[grupoInstance: new Grupo(params), pessoasList: pessoas]
 	}
 
 	def save() {
 		def grupoInstance = new Grupo(params)
 
-		if(params['pessoas'] == null){
-			grupoInstance.errors.rejectValue(null, null,
-					null,
-					"Um grupo não pode ser criado sem contatos.")
-			render(view: "create", model: [grupoInstance: grupoInstance])
-			return
-		}else{
-			//remover todas as pessoas e depois adicionar
+		if(params.list('pessoas').size() == 0){
+			grupoInstance.errors.rejectValue("version", "grupo.create.no.people.found",
+				[
+					message(code: 'grupo.label', default: 'Grupo')] as Object[],
+				"A group can't be created with no contacts in it.")
+			
+		render(view: "edit", model: [grupoInstance: grupoInstance])
+			def pessoas = springSecurityService.currentUser.pessoas.findAll { it.ativo == true }
+			render(view: "create", model: [grupoInstance: grupoInstance, pessoasList: pessoas])	
+			return		
 		}
+		
 		if (!grupoInstance.save(flush: true)) {
-			render(view: "create", model: [grupoInstance: grupoInstance])
+			def pessoas = springSecurityService.currentUser.pessoas.findAll { it.ativo == true }
+			render(view: "create", model: [grupoInstance: grupoInstance, pessoasList: pessoas])	
 			return
 		}
 
-		def id =  springSecurityService.principal.id
+		def id =  springSecurityService.currentUser.id
 		def associacao = Associacao.findById(id)
 		associacao.grupos.add(grupoInstance)
 		associacao.save(flush:true)
 
+		def people = params.list('pessoas')
+		for(person in people){
+			def pessoa = Pessoa.findById(person)
+			pessoa.grupos.add(grupoInstance)
+			pessoa.save(flush: true)
+		}
+
 		flash.message = message(code: 'default.created.message', args: [
 			message(code: 'grupo.label', default: 'Grupo'),
-			grupoInstance.id
+			grupoInstance.nome
 		])
 		redirect(action: "show", id: grupoInstance.id)
 	}
@@ -55,7 +67,7 @@ class GrupoController {
 		if (!grupoInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [
 				message(code: 'grupo.label', default: 'Grupo'),
-				id
+				grupoInstance.nome
 			])
 			redirect(action: "list")
 			return
@@ -65,26 +77,33 @@ class GrupoController {
 	}
 
 	def edit(Long id) {
+		def pessoas = []
+		for(pessoa in Associacao.findById(springSecurityService.currentUser.id).pessoas){
+			if(pessoa.ativo){
+				pessoas.add(pessoa)
+			}
+		}
 		def grupoInstance = Grupo.get(id)
 		if (!grupoInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [
 				message(code: 'grupo.label', default: 'Grupo'),
-				id
+				grupoInstance.nome
 			])
 			redirect(action: "list")
 			return
 		}
 
-		[grupoInstance: grupoInstance]
+		[grupoInstance: grupoInstance, pessoasList:pessoas]
 	}
 
 	def update(Long id, Long version) {
 		def grupoInstance = Grupo.get(id)
 		if(!params['pessoas']){
 
-			grupoInstance.errors.rejectValue(null, null,
-					null,
-					"Um grupo não pode ser criado sem contatos.")
+			grupoInstance.errors.rejectValue("version", "grupo.create.no.people.found",
+				[
+					message(code: 'grupo.label', default: 'Grupo')] as Object[],
+				"A group can't be created with no contacts in it.")
 			render(view: "edit", model: [grupoInstance: grupoInstance])
 			return
 		}
@@ -93,7 +112,7 @@ class GrupoController {
 		if (!grupoInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [
 				message(code: 'grupo.label', default: 'Grupo'),
-				id
+				grupoInstance.nome
 			])
 			redirect(action: "list")
 			return
@@ -113,7 +132,7 @@ class GrupoController {
 
 		grupoInstance.nome = params.nome
 		def savedPeople = grupoInstance.pessoas.id
-		def updatedPeople = params['pessoas']
+		def updatedPeople = params.pessoas
 
 
 		for(person in savedPeople){
@@ -123,12 +142,14 @@ class GrupoController {
 			grupoInstance.pessoas.remove(pessoa)
 		}
 		
-		for(person in updatedPeople){
-			def pessoa = Pessoa.get(person)
+		def lista = params.list('pessoas')
+		
+		for(person in lista){
+			def pessoa = Pessoa.findById(person.toLong())
 			pessoa.grupos.add(grupoInstance)
 			for(p in pessoa){
 				p.save(flush: true)
-				}
+			}
 			grupoInstance.pessoas.add(pessoa)
 		}
 
@@ -139,17 +160,17 @@ class GrupoController {
 
 		flash.message = message(code: 'default.updated.message', args: [
 			message(code: 'grupo.label', default: 'Grupo'),
-			grupoInstance.id
+			grupoInstance.nome
 		])
 		redirect(action: "show", id: grupoInstance.id)
 	}
-
+	
 	def delete(Long id) {
 		def grupoInstance = Grupo.get(id)
 		if (!grupoInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [
 				message(code: 'grupo.label', default: 'Grupo'),
-				id
+				grupoInstance.nome
 			])
 			redirect(action: "list")
 			return
@@ -158,25 +179,25 @@ class GrupoController {
 		try {
 			if(grupoInstance.pessoas){
 				for (pessoa in grupoInstance.pessoas){
-					pessoa.grupos.remove(grupoInstance)					
+					pessoa.grupos.remove(grupoInstance)
 					pessoa.save(flush: true)
 				}
 			}
-						
-			def associacao = Associacao.findById(springSecurityService.principal.id)
+
+			def associacao = Associacao.findById(springSecurityService.currentUser.id)
 			associacao.grupos.remove(grupoInstance)
 			associacao.save(flush:true)
 			grupoInstance.delete(flush: true)
 			flash.message = message(code: 'default.deleted.message', args: [
 				message(code: 'grupo.label', default: 'Grupo'),
-				id
+				grupoInstance.nome
 			])
 			redirect(action: "list")
 		}
 		catch (DataIntegrityViolationException e) {
 			flash.message = message(code: 'default.not.deleted.message', args: [
 				message(code: 'grupo.label', default: 'Grupo'),
-				id
+				grupoInstance.nome
 			])
 			redirect(action: "show", id: id)
 		}

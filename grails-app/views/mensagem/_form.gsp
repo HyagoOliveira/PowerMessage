@@ -26,23 +26,27 @@
 		</h3>
 		<g:textArea name="texto" value="${mensagemInstance?.texto}" />
 	</div>
-	
+
 	<div class="field">
 		<h3>
-			<label for="texto">Destinatários <span class="required-indicator">*</span></label>
+			<label for="texto">Destinatários <span
+				class="required-indicator">*</span></label>
 		</h3>
-		<g:radio name="myGroup" value="tabelaContatos" checked="true" onclick="handleClick(this);" style="padding-left:20px; "/> 
+		<g:radio name="myGroup" value="tabelaContatos" checked="true"
+			onclick="handleClick(this);" style="padding-left:20px; " />
 		Todos os Contatos
-		<g:radio name="myGroup" value="tabelaGrupos" onclick="handleClick(this);"/>
+		<g:radio name="myGroup" value="tabelaGrupos"
+			onclick="handleClick(this);" />
 		Grupos
- 	</div>
+	</div>
 </div>
 
 <g:if test="${listGrupos}">
 	<table id="tabelaGrupos" hidden="true" class="ui table">
 		<thead>
 			<tr>
-				<th><g:checkBox name="checkBoxGrupos" checked="false" onchange="selectAll('tabelaGrupos')"/></th>
+				<th><g:checkBox name="checkBoxGrupos" checked="false"
+						onchange="selectAll('tabelaGrupos')" /></th>
 				<g:sortableColumn property="nome"
 					title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
 
@@ -51,20 +55,21 @@
 			</tr>
 		</thead>
 		<tbody>
-			<g:each in="${listGrupos}" status="i"
-				var="grupoInstance">
-				
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+			<g:each in="${listGrupos}" status="i" var="grupoInstance">
+
+				<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					<td><g:checkBox name="grupos" value="${grupoInstance.id}"
+							checked="false" /></td>
+					<td><a
+						href="${createLink(uri: '/grupo/show/' + fieldValue(bean: grupoInstance, field: "id"))}">
+							${fieldValue(bean: grupoInstance, field: "nome")}
+					</a></td>
 					<td>
-					 	<g:checkBox name="grupos" value="${grupoInstance.id}" checked="false"/>
-					 </td>
-						<td>
-							<a href="${createLink(uri: '/grupo/show/' + fieldValue(bean: grupoInstance, field: "id"))}">${fieldValue(bean: grupoInstance, field: "nome")}</a>
+						<g:each in="${grupoInstance.pessoas}" var="pessoaInstance" status="j">
+						<g:link controller="pessoa" action="show" id="${pessoaInstance?.id}">${pessoaInstance?.encodeAsHTML()}</g:link><g:if test="${j != grupoInstance.pessoas.size() - 1}">,</g:if> <g:else>.</g:else> 
+						</g:each>
 						</td>
-						<td>
-							${fieldValue(bean: grupoInstance, field: "pessoas")}						
-						</td>
-					</tr>
+				</tr>
 			</g:each>
 		</tbody>
 	</table>
@@ -73,7 +78,9 @@
 	<table id="tabelaContatos" class="ui table">
 		<thead>
 			<tr>
-				<th><g:checkBox id="teste" class="ui checkbox" name="checkBoxPessoas" checked="false"onchange="selectAll('tabelaContatos')"/></th>
+				<th><g:checkBox id="teste" class="ui checkbox"
+						name="checkBoxPessoas" checked="false"
+						onchange="selectAll('tabelaContatos')" /></th>
 				<g:sortableColumn property="nome"
 					title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
 
@@ -82,20 +89,21 @@
 			</tr>
 		</thead>
 		<tbody>
-			<g:each in="${listPessoas}" status="i"
-				var="pessoaInstance">
+			<g:each in="${listPessoas}" status="i" var="pessoaInstance">
+				<g:if test="${pessoaInstance.ativo}">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					<td>
-					 	<g:checkBox name="contatos" class="ui checkbox" value="${pessoaInstance.id}" checked="false"  />
-					 </td>
-						<td>
-							<a href="${createLink(uri: '/pessoa/show/' + fieldValue(bean: pessoaInstance, field: "id"))}">${fieldValue(bean: pessoaInstance, field: "nome")}</a>
-						</td>
+						<td><g:checkBox name="contatos" class="ui checkbox"
+								value="${pessoaInstance.id}" checked="false" /></td>
+						<td><a
+							href="${createLink(uri: '/pessoa/show/' + fieldValue(bean: pessoaInstance, field: "id"))}">
+								${fieldValue(bean: pessoaInstance, field: "nome")}
+						</a></td>
 						<td>
 							${fieldValue(bean: pessoaInstance, field: "telefones")}
 						</td>
 					</tr>
+				</g:if>
 			</g:each>
 		</tbody>
 	</table>
-	</g:if>
+</g:if>

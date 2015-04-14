@@ -5,6 +5,22 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'pessoa.label', default: 'Pessoa')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 	</head>
 	<body>
 		<div id="show-pessoa" class="content scaffold-show" role="main">
@@ -45,8 +61,9 @@
 							<span id="grupos-label" class="property-label"><g:message code="pessoa.grupos.label" default="Grupo" /></span>
 						</td>
 						<td>
-							<g:each in="${pessoaInstance.grupos}" var="g">
-								<span class="property-value" aria-labelledby="grupos-label"><g:link controller="grupo" action="show" id="${g.id}">${g?.encodeAsHTML()}</g:link></span>
+							<g:each in="${pessoaInstance.grupos}" var="g" status="j">
+								<span class="property-value" aria-labelledby="grupos-label">
+								<g:link controller="grupo" action="show" id="${g.id}">${g?.encodeAsHTML()}</g:link><g:if test="${j != pessoaInstance.grupos.size() - 1}">,</g:if> <g:else>.</g:else> 
 							</g:each>						
 						</td>
 					</tr>
@@ -81,7 +98,49 @@
 					opacity: 0.6 !important;
 					padding: 8px;
 					margin-left:3px;"></i>
-				<g:actionSubmit class="tiny labeled ui button" style="padding-left:28px;" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-			</g:form>
+				
+			<a id="modal-494344" href="#modal-container-494344" role="button"
+				style="padding-left: 28px;" class="tiny ui button"
+				data-toggle="modal">Remover</a>
+
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+
+						<div class="modal fade" id="modal-container-494344" role="dialog"
+							aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="ui modal-dialog modal-sm">
+								<div class="modal-content">
+									<div class="modal-header" style="background-color: #E0E0E0;">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">×</button>
+										<h4 class="modal-title" id="myModalLabel" args="">
+											<g:message code="Remover Contato" args="[entityName]" />
+										</h4>
+									</div>
+									<div class="modal-body">
+										<i><h3 align="center">
+												Tem certeza que deseja remover o contato
+												${pessoaInstance.nome}?
+											</h3></i>
+									</div>
+									<div class="modal-footer">
+										<div style="display: block; margin: auto; float: center;">
+											<button type="button" class="btn btn-danger"
+												data-dismiss="modal">Não</button>
+											<g:actionSubmit class="btn btn-success" action="delete"
+												code="default.button.delete.label" value="Sim" />
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+				</g:form>
 		</div>
 	</body>

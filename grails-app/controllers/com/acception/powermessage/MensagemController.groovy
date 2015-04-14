@@ -14,20 +14,16 @@ class MensagemController {
 	}
 
 	def list(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
-		def associacao = Associacao.findById(springSecurityService.currentUser.id)
-		def msgs = []
-		for (m in associacao.mensagens){
-			if(m.ativo == true){
-				msgs.add(m)
-			}
-		}
+		params.max = Math.min(max ?: 10, 100)		
+		def msgs = springSecurityService.currentUser.mensagens.findAll { it.ativo == true }
 		[mensagemInstanceList: msgs, mensagemInstanceTotal: msgs.size()]
 	}
 
 	def create() {
 		if(Pessoa.ativos.list().size() == 0) {
-			flash.message = "Você não possui contatos para enviar mensagens."
+			   mensagemInstance.errors.rejectValue("version", "mensagem.create.no.people.found",
+                          [message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
+                          "A message can't be sent without a recipient")
 			redirect(action: "list")
 			return;
 		}
@@ -38,19 +34,21 @@ class MensagemController {
 	}
 
 	def save() {
-		def mensagemInstance = new Mensagem(paarams)
+		def mensagemInstance = new Mensagem(params)
 		def associacao = Associacao.findById(springSecurityService.currentUser.id)
 		switch (params.myGroup){
 
 			case 'tabelaContatos':
 
 				if(!params.contatos){
-					flash.message = "Você deve selecionar pelo menos um contato."
+					 mensagemInstance.errors.rejectValue("version", "mensagem.create.no.people.found",
+                          [message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
+                          "A message can't be sent without a recipient")
 					render(view: "create", model: [mensagemInstance: mensagemInstance])
 					return
 				}
-				
-				flash.message = "Enviando Mensagem..."
+				flash.message = message(code: 'mensagem.being.send', args: [message(code: 'mensagem.label', default: 'Mensagem'), mensagemInstance.id])
+		
 				associacao.mensagens.add(mensagemInstance)
 				associacao.save(flush:true)
 				for(p in Pessoa.getAll(params.contatos)){
@@ -63,12 +61,15 @@ class MensagemController {
 			case 'tabelaGrupos':
 
 				if(!params.grupos ){
-					flash.message = "Você deve selecionar pelo menos um grupo."
+					 mensagemInstance.errors.rejectValue("version", "mensagem.create.no.people.found",
+                          [message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
+                          "A message can't be sent without a recipient")
 					render(view: "create", model: [mensagemInstance: mensagemInstance])
 					return
 				}
 
-				flash.message = "Enviando Mensagem..."
+				flash.message = message(code: 'mensagem.being.send', args: [message(code: 'mensagem.label', default: 'Mensagem'), mensagemInstance.id])
+		
 				def grupos = Grupo.getAll(params.grupos)
 				for (g in grupos){					
 					g.mensagens.add(mensagemInstance)		
@@ -82,7 +83,11 @@ class MensagemController {
 		}
 
 		springSecurityService.currentUser.addToMensagens(mensagemInstance)
-		flash.message = smsService.khipuAnswer
+		if(smsService.khipuAnswer != 'none'){
+			flash.message = smsService.khipuAnswer
+		} else { flash.message = message(code: 'mensagem.being.send', args: [message(code: 'mensagem.label', default: 'Mensagem'), mensagemInstance.id])
+		}
+		
 		redirect(action: "show", id: mensagemInstance.id)
 	}
 
@@ -90,7 +95,7 @@ class MensagemController {
 	def show(Long id) {
 		def mensagemInstance = Mensagem.get(id)
 		if (!mensagemInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [
+			flash.message = message(code: 'default.not.found.message.female', args: [
 				message(code: 'mensagem.label', default: 'Mensagem'),
 				id
 			])
@@ -104,7 +109,7 @@ class MensagemController {
 	def edit(Long id) {
 		def mensagemInstance = Mensagem.get(id)
 		if (!mensagemInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [
+			flash.message = message(code: 'default.not.found.message.female', args: [
 				message(code: 'mensagem.label', default: 'Mensagem'),
 				id
 			])
@@ -118,7 +123,7 @@ class MensagemController {
 	def update(Long id, Long version) {
 		def mensagemInstance = Mensagem.get(id)
 		if (!mensagemInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [
+			flash.message = message(code: 'default.not.found.message.female', args: [
 				message(code: 'mensagem.label', default: 'Mensagem'),
 				id
 			])
@@ -128,7 +133,7 @@ class MensagemController {
 
 		if (version != null) {
 			if (mensagemInstance.version > version) {
-				mensagemInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+				mensagemInstance.errors.rejectValue("version", "default.optimistic.locking.failure.female",
 						[
 							message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
 						"Another user has updated this Mensagem while you were editing")
@@ -144,7 +149,7 @@ class MensagemController {
 			return
 		}
 
-		flash.message = message(code: 'default.updated.message', args: [
+		flash.message = message(code: 'default.updated.message.female', args: [
 			message(code: 'mensagem.label', default: 'Mensagem'),
 			mensagemInstance.id
 		])

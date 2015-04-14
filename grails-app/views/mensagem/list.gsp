@@ -66,8 +66,8 @@
 
 	</g:if>
 	<g:else>
-	<div class="ui negative message" role="status">
-				Não há mensagens cadastrados.
+	<div class="ui warning message" role="status">
+				Não há mensagens enviadas.
 			</div>
 	</g:else>
 </div>
