@@ -140,6 +140,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/pessoa/**': 			['ROLE_ASSOCIACAO'],
 	'/associacao/**': 		['ROLE_ADMIN'],
 	'/configuracao/**':		['ROLE_ADMIN'],
+	'/console':		        ['ROLE_ADMIN'],
+	'/console/**':	        ['ROLE_ADMIN'],
 	'/mensagem/index':		['ROLE_ASSOCIACAO'],
 	'/**':               	['IS_AUTHENTICATED_ANONYMOUSLY']
 ];

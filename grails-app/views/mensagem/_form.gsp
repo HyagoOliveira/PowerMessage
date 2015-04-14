@@ -48,10 +48,10 @@
 				<th><g:checkBox name="checkBoxGrupos" checked="false"
 						onchange="selectAll('tabelaGrupos')" /></th>
 				<g:sortableColumn property="nome"
-					title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
+					title="${message(code: 'pessoa.label', default: 'Contato')}" />
 
 				<g:sortableColumn property="descricao"
-					title="${message(code: 'pessoa.telefone2.label', default: 'Descrição')}" />
+					title="${message(code: 'telefones.numero.label', default: 'Numero(s)')}" />
 			</tr>
 		</thead>
 		<tbody>
@@ -68,6 +68,7 @@
 						<g:each in="${grupoInstance.pessoas}" var="pessoaInstance" status="j">
 						<g:link controller="pessoa" action="show" id="${pessoaInstance?.id}">${pessoaInstance?.encodeAsHTML()}</g:link><g:if test="${j != grupoInstance.pessoas.size() - 1}">,</g:if> <g:else>.</g:else> 
 						</g:each>
+
 						</td>
 				</tr>
 			</g:each>
@@ -82,10 +83,10 @@
 						name="checkBoxPessoas" checked="false"
 						onchange="selectAll('tabelaContatos')" /></th>
 				<g:sortableColumn property="nome"
-					title="${message(code: 'pessoa.nome.label', default: 'Nome')}" />
+					title="${message(code: 'pessoa.label', default: 'Contato')}" />
 
 				<g:sortableColumn property="descricao"
-					title="${message(code: 'pessoa.descricao.label', default: 'Descrição')}" />
+					title="${message(code: 'telefone.numero.label', default: 'Numero(s)')}" />
 			</tr>
 		</thead>
 		<tbody>
@@ -99,7 +100,7 @@
 								${fieldValue(bean: pessoaInstance, field: "nome")}
 						</a></td>
 						<td>
-							${fieldValue(bean: pessoaInstance, field: "telefones")}
+							<g:join in="${pessoaInstance.telefones}" delimiter=", "/>
 						</td>
 					</tr>
 				</g:if>

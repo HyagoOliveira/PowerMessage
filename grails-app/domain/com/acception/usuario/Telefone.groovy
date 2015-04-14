@@ -4,12 +4,14 @@ class Telefone {
 
     String ddd
 	String numero
+	Operadora operadora
 	
 	static belongsTo = [pessoa:Pessoa]
 	
 	static constraints = {
 		ddd(nullable:true, maxSize:3)
 		numero(nullable:true, maxSize:12)
+		operadora(nullable: true)
 	}
 	
 	String toString() {
