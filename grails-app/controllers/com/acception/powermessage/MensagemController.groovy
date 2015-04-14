@@ -4,7 +4,7 @@ package com.acception.powermessage
 import com.acception.usuario.Pessoa
 
 class MensagemController {
-
+	def springSecurityService
 	def smsService;
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -15,7 +15,14 @@ class MensagemController {
 
 	def list(Integer max) {
 		params.max = Math.min(max ?: 10, 100)
-		[mensagemInstanceList: Mensagem.list(params), mensagemInstanceTotal: Mensagem.count()]
+		def associacao = Associacao.findById(springSecurityService.currentUser.id)
+		def msgs = []
+		for (m in associacao.mensagens){
+			if(m.ativo == true){
+				msgs.add(m)
+			}
+		}
+		[mensagemInstanceList: msgs, mensagemInstanceTotal: msgs.size()]
 	}
 
 	def create() {
@@ -24,13 +31,15 @@ class MensagemController {
 			redirect(action: "list")
 			return;
 		}
-
-		[mensagemInstance: new Mensagem(params)]
+		
+		[mensagemInstance: new Mensagem(params),
+			listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas,
+			listGrupos: Associacao.findById(springSecurityService.currentUser.id).grupos ]
 	}
 
 	def save() {
-		def mensagemInstance = new Mensagem(params)
-
+		def mensagemInstance = new Mensagem(paarams)
+		def associacao = Associacao.findById(springSecurityService.currentUser.id)
 		switch (params.myGroup){
 
 			case 'tabelaContatos':
@@ -40,8 +49,14 @@ class MensagemController {
 					render(view: "create", model: [mensagemInstance: mensagemInstance])
 					return
 				}
-
+				
 				flash.message = "Enviando Mensagem..."
+				associacao.mensagens.add(mensagemInstance)
+				associacao.save(flush:true)
+				for(p in Pessoa.getAll(params.contatos)){
+					p.mensagens.add(mensagemInstance)
+					p.save(flush:true)
+				}
 				smsService.send(mensagemInstance, params.contatos)
 				break
 
@@ -55,7 +70,13 @@ class MensagemController {
 
 				flash.message = "Enviando Mensagem..."
 				def grupos = Grupo.getAll(params.grupos)
-				mensagemInstance.grupos = grupos
+				for (g in grupos){					
+					g.mensagens.add(mensagemInstance)		
+					g.save(flush:true)	
+				}
+				associacao.grupos = Grupo.getAll(params.grupos)
+				associacao.mensagens.add(mensagemInstance)
+				associacao.save(flush:true)
 				smsService.send(mensagemInstance, grupos.pessoas*.id)
 				break
 		}
@@ -132,10 +153,10 @@ class MensagemController {
 
 	def delete(Long id) {
 		def mensagemInstance = Mensagem.get(id)
-		mensagemInstance.flag = "false"
-
-		mensagemInstance.save(flush: true)
-
+		def associacao = Associacao.findById(springSecurityService.currentUser.id)
+		mensagemInstance.ativo = false
+		mensagemInstance.save(flush: true)		
+		associacao.save(flush:true)
 		redirect(action: "list")
 	}
 	
