@@ -11,7 +11,7 @@
 		<div id="show-mensagem" class="content scaffold-show" role="main">
 			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+			<div class="ui info message" role="status">${flash.message}</div>
 			</g:if>
 			<table class="ui table">
 				<g:if test="${mensagemInstance?.texto}">
@@ -69,9 +69,9 @@
 						</td>
 						<td>
 							<g:each in="${mensagemInstance.grupos}" var="g">
-								<span class="property-value" aria-labelledby="grupos-label">
-									<g:link controller="grupo" action="show" id="${g.id}">${g?.encodeAsHTML()}</g:link>
-								</span>
+									<span class="property-value" aria-labelledby="grupos-label">
+										<g:link controller="grupo" action="show" id="${g.id}">${g?.encodeAsHTML()}</g:link>
+									</span>
 							</g:each>
 						</td>					
 					
@@ -85,7 +85,12 @@
 						</td>
 						<td>
 							<g:each in="${mensagemInstance.pessoas}" var="p">
+							<g:if test="${p.ativo == true}">
 								<span class="property-value" aria-labelledby="pessoas-label"><g:link controller="pessoa" action="show" id="${p?.id}">${p?.encodeAsHTML()}</g:link></span>
+							</g:if>
+							<g:else>
+							<span class="property-value" aria-labelledby="pessoas-label">${p?.telefones}</span>
+							</g:else>
 							</g:each>
 						</td>
 					</tr>
@@ -100,6 +105,15 @@
 						<g:message code="Encaminhar" default="Encaminhar" />
 					</div>
 				</a>
+				<i class="icon trash" style="position: absolute;
+				z-index: 1;
+				vertical-align: bottom;
+				opacity: 0.6 !important;
+				padding: 8px;
+				margin-left:3px;"></i>
+			<g:actionSubmit class="tiny labeled ui button" style="padding-left:28px;" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" formnovalidate="" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
+				
+
 			</g:form>
 		</div>
 	</body>

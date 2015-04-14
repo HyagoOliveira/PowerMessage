@@ -55,7 +55,9 @@
 			</div>
 		</g:if>
 		<g:else>
-			<div class="pagination">Não há grupos.</div>
+			<div class="ui negative message" role="status">
+				Não há grupos cadastrados.
+			</div>
 		</g:else>
 	</div>
 </body>

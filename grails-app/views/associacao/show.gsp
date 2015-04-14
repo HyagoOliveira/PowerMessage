@@ -7,7 +7,9 @@
 <g:set var="entityName"
 	value="${message(code: 'associacao.label', default: 'Associação')}" />
 <title><g:message code="default.show.label" args="[entityName]" /></title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 </head>
 <body>
@@ -87,7 +89,5 @@
 			<g:actionSubmit class="tiny ui button" style="padding-left:28px;" action="delete" code="default.button.delete.label" value="Remover" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 		</g:form>
 	</div>
-
-
 </body>
 </html>
