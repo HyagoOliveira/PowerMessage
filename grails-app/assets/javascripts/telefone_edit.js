@@ -30,7 +30,7 @@ function addPhone(){
 }
 
 function removePhone(valor){
-	
+	console.log("teste");
 	var size = $('#telefonesTable').children().length;
 
 	if(size > 2)

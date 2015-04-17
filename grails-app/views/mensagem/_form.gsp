@@ -51,7 +51,8 @@
 					title="${message(code: 'pessoa.label', default: 'Contato')}" />
 
 				<g:sortableColumn property="descricao"
-					title="${message(code: 'telefones.numero.label', default: 'Numero(s)')}" />
+					title="${message(code: 'telefones.numero.label', default: 'Telefone(s)')}" />
+					
 			</tr>
 		</thead>
 		<tbody>
@@ -87,20 +88,32 @@
 
 				<g:sortableColumn property="descricao"
 					title="${message(code: 'telefone.numero.label', default: 'Numero(s)')}" />
+					
+				<g:sortableColumn property="descricao"
+					title="${message(code: 'telefone.operadora.label', default: 'Operadora(s)')}" />
 			</tr>
 		</thead>
 		<tbody>
 			<g:each in="${listPessoas}" status="i" var="pessoaInstance">
 				<g:if test="${pessoaInstance.ativo}">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-						<td><g:checkBox name="contatos" class="ui checkbox"
-								value="${pessoaInstance.id}" checked="false" /></td>
-						<td><a
+						<td>
+							<g:checkBox name="contatos" class="ui checkbox"
+								value="${pessoaInstance.id}" checked="false" />
+						</td>
+						<td>
+							<a
 							href="${createLink(uri: '/pessoa/show/' + fieldValue(bean: pessoaInstance, field: "id"))}">
 								${fieldValue(bean: pessoaInstance, field: "nome")}
-						</a></td>
+							</a>
+						</td>
 						<td>
 							<g:join in="${pessoaInstance.telefones}" delimiter=", "/>
+						</td>
+						<td>
+							<g:each in="${pessoaInstance.telefones}" status="j" var="telefoneInstance">
+								<g:if test="${telefoneInstance.operadora}">${telefoneInstance.operadora}<g:if test="${j != pessoaInstance.telefones.size() - 1}">,</g:if> <g:else>.</g:else></g:if> 
+							</g:each>
 						</td>
 					</tr>
 				</g:if>

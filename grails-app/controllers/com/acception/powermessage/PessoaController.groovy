@@ -2,6 +2,8 @@ package com.acception.powermessage
 
 import com.acception.usuario.Pessoa
 import com.acception.usuario.Telefone
+import com.acception.usuario.Operadora
+
 import org.springframework.dao.DataIntegrityViolationException
 
 class PessoaController {
@@ -23,20 +25,21 @@ class PessoaController {
     }
 
     def create() {		
-		[pessoaInstance: new Pessoa(params)]
+		[pessoaInstance: new Pessoa(params), operadorasList: Operadora.list()]
     }
 
     def save() {
         def pessoaInstance = new Pessoa(params)
+		
         springSecurityService.currentUser.addToPessoas(pessoaInstance)
 		if (params?.ddd.getClass().isArray()) {
-			for(int i=0; i<params?.ddd.size();i++){
-				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i]));
+			for(int i=0; i<params?.ddd.size();i++){				
+				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i], operadora: params?.operadora[i]));
 			}
 		} else {
-			pessoaInstance.addToTelefones(new Telefone(params));
+			pessoaInstance?.addToTelefones(new Telefone(params));
         }
-
+			
         if (!pessoaInstance.save(flush: true)) {
             render(view: "create", model: [pessoaInstance: pessoaInstance])
             return
@@ -68,7 +71,7 @@ class PessoaController {
             return
         }
 
-        [pessoaInstance: pessoaInstance]
+        [pessoaInstance: pessoaInstance,  operadorasList: Operadora.list()]
     }
 
     def update(Long id, Long version) {
@@ -84,7 +87,7 @@ class PessoaController {
 		
 		if(params?.ddd.getClass().isArray()){
 			for(int i=0; i<params?.ddd.size();i++){
-				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i]));
+				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i],  operadora: params?.operadora[i]));
 			}
 		}
 		else
