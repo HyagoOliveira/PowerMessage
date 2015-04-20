@@ -24,7 +24,7 @@
 					default="Texto" /> <span class="required-indicator">*</span>
 			</label>
 		</h3>
-		<g:textArea name="texto" value="${mensagemInstance?.texto}" />
+		<g:textArea name="texto" required="" oninvalid="this.setCustomValidity('Digite uma mensagem')" onchange="this.setCustomValidity('')" value="${mensagemInstance?.texto}" />
 	</div>
 
 	<div class="field">
@@ -98,7 +98,7 @@
 				<g:if test="${pessoaInstance.ativo}">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 						<td>
-							<g:checkBox name="contatos" class="ui checkbox"
+							<g:checkBox name="contatos"  class="ui checkbox"
 								value="${pessoaInstance.id}" checked="false" />
 						</td>
 						<td>
