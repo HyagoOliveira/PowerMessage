@@ -31,7 +31,6 @@ class PessoaController {
     def save() {
         def pessoaInstance = new Pessoa(params)
 		
-        springSecurityService.currentUser.addToPessoas(pessoaInstance)
 		if (params?.ddd.getClass().isArray()) {
 			for(int i=0; i<params?.ddd.size();i++){				
 				pessoaInstance.addToTelefones(new Telefone(ddd:params?.ddd[i], numero: params?.numero[i], operadora: params?.operadora[i]));
@@ -39,7 +38,21 @@ class PessoaController {
 		} else {
 			pessoaInstance?.addToTelefones(new Telefone(params));
         }
-			
+		
+        def pessoas = springSecurityService.currentUser.pessoas.findAll { it.ativo == true }
+        for (p in pessoas) {
+            for (t in p.telefones) {
+                if (pessoaInstance.telefones*.numero.contains(t.numero)) {
+                    pessoaInstance.errors.reject("usuario.telefone.repetido",
+                          [t, p] as Object[],
+                          "O telefone {0} já esta sendo usado por {1}")
+                    render(view: "create", model: [pessoaInstance: pessoaInstance, operadorasList: Operadora.list()])
+                    return
+                }
+            }
+        }
+        springSecurityService.currentUser.addToPessoas(pessoaInstance)
+
         if (!pessoaInstance.save(flush: true)) {
             render(view: "create", model: [pessoaInstance: pessoaInstance])
             return
@@ -75,7 +88,7 @@ class PessoaController {
     }
 
     def update(Long id, Long version) {
-        def pessoaInstance = Pessoa.get(id)
+        def pessoaInstance = Pessoa.get(id)        
 		
         if (!pessoaInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'pessoa.label', default: 'Pessoa'), pessoaInstance.nome])
@@ -84,6 +97,7 @@ class PessoaController {
         }
 		
 		pessoaInstance.telefones.clear();
+        pessoaInstance.discard()
 		
 		if(params?.ddd.getClass().isArray()){
 			for(int i=0; i<params?.ddd.size();i++){
@@ -92,6 +106,22 @@ class PessoaController {
 		}
 		else
 			pessoaInstance.addToTelefones(new Telefone(params));
+
+        def pessoas = springSecurityService.currentUser.pessoas.findAll { it.ativo == true }
+
+        for (p in pessoas) {
+            if (p.id != pessoaInstance.id) {
+                for (t in p.telefones) {
+                    if (pessoaInstance.telefones*.numero.contains(t.numero)) {
+                        pessoaInstance.errors.reject("usuario.telefone.repetido",
+                              [t, p] as Object[],
+                              "O telefone {0} já esta sendo usado por {1}")
+                        render(view: "edit", model: [pessoaInstance: pessoaInstance, operadorasList: Operadora.list()])
+                        return
+                    }
+                }
+            }
+        }
 
         if (version != null) {
             if (pessoaInstance.version > version) {
@@ -103,9 +133,9 @@ class PessoaController {
             }
         }
 
-        pessoaInstance.properties = params
+        pessoaInstance.properties = params        
 
-        if (!pessoaInstance.save(flush: true)) {
+        if (!pessoaInstance.merge()) {
             render(view: "edit", model: [pessoaInstance: pessoaInstance])
             return
         }
