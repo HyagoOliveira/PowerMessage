@@ -12,3 +12,8 @@
 *= require_self
 *= require themes/ui-lightness/jquery-ui-1.10.4.custom.min
 */
+
+body{
+	background-color: blue !important;
+}
+

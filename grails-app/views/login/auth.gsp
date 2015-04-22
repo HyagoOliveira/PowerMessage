@@ -7,7 +7,18 @@
 		<asset:javascript src="http://jquery-airport.googlecode.com/files/jquery.airport-1.1.source.js"/>
 				<script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	
+	<sec:ifNotLoggedIn>
+	<style type="text/css">
+		body{
+			background-image: url('https://northmantrader.files.wordpress.com/2014/09/bottle.jpg') !important;
+			background-repeat: no-repeat !important;
+			background-size: cover !important;
+		}
+		p{
+			font-weight: bold;
+		}
+	</style>
+	</sec:ifNotLoggedIn>
 	</head>
 	
 	
