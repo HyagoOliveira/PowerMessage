@@ -29,7 +29,7 @@ class MensagemController {
 		}
 		
 		[mensagemInstance: new Mensagem(params),
-			listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas,
+			listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas.findAll { it.ativo == true },
 			listGrupos: Associacao.findById(springSecurityService.currentUser.id).grupos ]
 	}
 
@@ -39,12 +39,24 @@ class MensagemController {
 		switch (params.myGroup){
 
 			case 'tabelaContatos':
+				if(!params.texto){
+					mensagemInstance.errors.rejectValue("version", "mensagem.create.no.message.found",
+							[message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
+							"A message can't be sent without a recipient")
 
+					println listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas.findAll { it.ativo == true }
+					render(view: "create", model: [mensagemInstance: mensagemInstance, listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas,
+												   listGrupos: Associacao.findById(springSecurityService.currentUser.id).grupos])
+					return
+				}
 				if(!params.contatos){
 					 mensagemInstance.errors.rejectValue("version", "mensagem.create.no.people.found",
                           [message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
                           "A message can't be sent without a recipient")
-					render(view: "create", model: [mensagemInstance: mensagemInstance])
+
+					 println listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas.findAll { it.ativo == true }
+					render(view: "create", model: [mensagemInstance: mensagemInstance, listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas,
+			listGrupos: Associacao.findById(springSecurityService.currentUser.id).grupos])
 					return
 				}
 				flash.message = message(code: 'mensagem.being.send', args: [message(code: 'mensagem.label', default: 'Mensagem'), mensagemInstance.id])
@@ -60,11 +72,25 @@ class MensagemController {
 
 			case 'tabelaGrupos':
 
+				if(!params.texto){
+					mensagemInstance.errors.rejectValue("version", "mensagem.create.no.message.found",
+							[message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
+							"A message can't be sent without a recipient")
+
+					println listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas.findAll { it.ativo == true }
+					render(view: "create", model: [mensagemInstance: mensagemInstance, listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas,
+												   listGrupos: Associacao.findById(springSecurityService.currentUser.id).grupos])
+					return
+				}
+
 				if(!params.grupos ){
 					 mensagemInstance.errors.rejectValue("version", "mensagem.create.no.people.found",
                           [message(code: 'mensagem.label', default: 'Mensagem')] as Object[],
                           "A message can't be sent without a recipient")
-					render(view: "create", model: [mensagemInstance: mensagemInstance])
+
+					println listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas.findAll { it.ativo == true }
+					render(view: "create", model: [mensagemInstance: mensagemInstance, listPessoas: Associacao.findById(springSecurityService.currentUser.id).pessoas,
+												   listGrupos: Associacao.findById(springSecurityService.currentUser.id).grupos])
 					return
 				}
 
@@ -83,10 +109,11 @@ class MensagemController {
 		}
 
 		springSecurityService.currentUser.addToMensagens(mensagemInstance)
-		if(smsService.khipuAnswer != 'none'){
-			flash.message = smsService.khipuAnswer
-		} else { flash.message = message(code: 'mensagem.being.send', args: [message(code: 'mensagem.label', default: 'Mensagem'), mensagemInstance.id])
-		}
+		//if(smsService.khipuAnswer != 'none'){
+		//	flash.message = smsService.khipuAnswer
+		//} else {
+		 flash.message = message(code: 'mensagem.being.send', args: [message(code: 'mensagem.label', default: 'Mensagem'), mensagemInstance.id])
+		//}
 		
 		redirect(action: "show", id: mensagemInstance.id)
 	}

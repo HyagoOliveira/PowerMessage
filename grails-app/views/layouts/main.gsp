@@ -24,11 +24,13 @@
 	href="${assetPath(src: 'apple-touch-icon-retina.png')}">
 
 <g:layoutHead />
-<asset:javascript src="semantic.min.js"/>
-<asset:stylesheet src="semantic.min.css"/>
-	<asset:javascript src="application.js"/>
 		<script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	
+	<asset:javascript src="application.js"/>
+<asset:javascript src="semantic.min.js"/>
+<asset:stylesheet src="semantic.min.css"/>
+
 		<asset:javascript src="http://jquery-airport.googlecode.com/files/jquery.airport-1.1.source.js"/>
 <r:layoutResources />
 </head>
@@ -76,10 +78,6 @@
 		<g:message code="spinner.alt" default="Loading&hellip;" />
 	</div>
 	<r:layoutResources />
-	<script>
-	$(document).ready(function(){
-		$('.powermessage').airport([ 'Power Message', 'Acception Tecnologia']);
-	});
-	</script>
+	
 </body>
 </html>

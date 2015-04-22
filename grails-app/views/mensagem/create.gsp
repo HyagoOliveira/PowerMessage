@@ -7,7 +7,6 @@
 	<g:set var="entityName" value="${message(code: 'mensagem.label', default: 'Mensagem')}" />
 	<title><g:message code="default.create.label" args="[entityName]" /></title>
 	<script type="text/javascript">
-
 		function selectAll(idTabela) {
 			$('#' + idTabela + ' input:checkbox').prop('checked', $('#' + idTabela + ' th input:checkbox').is(':checked'));
 		}
@@ -26,6 +25,10 @@
 				$("#tabelaContatos input:checkbox").prop("checked", false);
 			}
 		}
+		function carrega () {
+			$('#create-mensagem').addClass('ui loading form segment');
+		};
+
 	</script>
 </head>
 <body>
@@ -41,12 +44,14 @@
 			</g:eachError>
 		</ul>
 	</g:hasErrors>
-	<g:form action="save">
+	<g:form action="save" onsubmit="carrega()">
 		<g:render template="form"/>
 		<button type="submit" name="create" class="ui right labeled icon button">
 			Enviar <i class="icon send"></i>
 		</button>
 	</g:form>
+
+
 </div>
 </body>
 </html>

@@ -26,7 +26,7 @@
 			</div>
 		</g:if>
 		
-		<div class="ui buttons" style="padding-top:8px;">
+		<div class="ui buttons" style="padding-top:8px; border-bottom-right-radius: 0rem; border-top-left-radius: 0rem;">
 			<g:link action="list" params="[letra: null]">
 				<div class="ui button" style="font-size: 0.64em; " data-content="Listar todos os contatos" data-variation="basic">
 					<i class="ui icon list layout" ></i>

@@ -8,7 +8,7 @@
 	<body>
 		<div id="page-body" role="main">
 			<h1>Power Message</h1>
-			<p>Seja bem-vindo(a), adminidsdsstrador!</p>
+			<p>Seja bem-vindo(a), administrador!</p>
 				<div class="introduction">
         <a class="ui black version label" href="https://github.com/Semantic-Org/Semantic-UI/blob/master/RELEASE-NOTES.md">
           1.11.6

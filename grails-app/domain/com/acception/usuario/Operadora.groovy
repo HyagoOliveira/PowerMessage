@@ -5,8 +5,16 @@ public enum Operadora {
     TIM("Tim"),
     VIVO("Vivo"),
     CLARO("Claro"),
-    OI("Oi")
-
+    OI("Oi"),
+	ALGAR("Algar"),
+	NEXTEL("Nextel"),
+	SERCOMTEL("Sercomtel"),
+	CTBC("CTBC"),
+	CONVERGIA("Convergia"),
+	INTELIG("Intelig Tim"),
+	GVT("GVT"),
+	AEROTECH("Aerotech")
+	
     String nome
 
     Operadora(nome){
@@ -14,7 +22,7 @@ public enum Operadora {
     }
 
     static def list(){
-        [TIM, VIVO, CLARO, OI]
+        [TIM, VIVO, CLARO, OI, ALGAR, NEXTEL, SERCOMTEL, CTBC, CONVERGIA, INTELIG, GVT, AEROTECH]
     }
 
     static transients = ['operadora']
